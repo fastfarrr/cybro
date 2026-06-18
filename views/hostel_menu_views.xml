@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--main menu-->
+    <menuitem id="menu_hostel_erp_root" name="Hostel Erp"/>
+<!--    sub menu-->
+    <menuitem id="menu_hostel_erp_form" name="Hostel room"
+              parent="menu_hostel_erp_root"/>
+
+    <menuitem id="menu_hostel_erp_act" name="Hostel form"
+              parent="menu_hostel_erp_form" action="hostel_room_action"/>
+
+
+    <menuitem id="menu_student_erp" name="Students Details"
+              parent="menu_hostel_erp_root" action="student_details_action"/>
+
+</odoo> 
