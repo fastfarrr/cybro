@@ -11,9 +11,13 @@
                            options="{'clickable':1}"/>
                 </header>
                 <sheet>
+                      <group>
+                            <h1>
+                                <field name="room_number" readonly="1"/>
+                            </h1>
+                        </group>
                     <group>
                         <group>
-                            <field name="room_number"/>
                             <field name="room_type"/>
                             <field name="number_of_beds"/>
                         </group>
