@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models, _, api
+from odoo import fields, models,_, api
+from datetime import date
 
 
 class Student(models.Model):
@@ -29,6 +30,10 @@ class Student(models.Model):
                                         ('confirmed', "confirmed"),
                                         ], default='draft',
                              required=True, tracking=True, )
+    company_id = fields.Many2one("res.company", string="Company",related="room_id.company_id")
+
+    student_age = fields.Integer(string="Age",compute="_compute_student_age",store=True)
+
 
 
     @api.model_create_multi
@@ -44,7 +49,18 @@ class Student(models.Model):
         self.state='confirmed'
         for rec in self:
             if rec.room_id:
-                rec.room_id.state='Full'
+                rec.room_id.state='Partial'
+
+    @api.depends('dob')
+    def _compute_student_age(self):
+        for record in self:
+            if record.dob:
+                today = date.today()
+                birth=record.dob
+                record.student_age=today.year - birth.year
+            else:
+                record.student_age = 0
+
 
 
 

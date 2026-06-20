@@ -20,7 +20,6 @@
         <field name="padding">3</field>
         <field name="number_increment">1</field>
         <field name="number_next">1</field>
-
     </record>
     </data>
 

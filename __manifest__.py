@@ -13,9 +13,11 @@
     # 'auto_install':True,
     'depends': ['mail'],
     'data': [
+        "demo/demo.xml",
         "security/ir.model.access.csv",
         "data/sequence_data.xml",
         "views/hostel_room_views.xml",
         "views/hostel_student_views.xml",
+        "views/hostel_facilities.xml",
         "views/hostel_menu_views.xml"]
 }

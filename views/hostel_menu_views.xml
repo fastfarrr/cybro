@@ -13,4 +13,7 @@
     <menuitem id="menu_student_erp" name="Students Details"
               parent="menu_hostel_erp_root" action="student_details_action"/>
 
+    <menuitem id="menu_hostel_facilities" name="Hostel facilities"
+              parent="menu_hostel_erp_root" action="hostel_facilities_action"/>
+
 </odoo> 

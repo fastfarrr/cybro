@@ -23,9 +23,11 @@
                         <group>
                             <field name="student_name"/>
                             <field name="dob"/>
+                            <field name="student_age"/>
                             <field name="is_email_from"/>
                             <field name="room_id" readonly="state == 'confirmed'"/>
                             <field name="email"/>
+                            <field name="company_id"/>
                         </group>
                         <group>
                             <field name="image" widget="image"

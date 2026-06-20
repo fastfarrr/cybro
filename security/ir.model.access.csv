@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 hostel_management.access_hostel_room,access_hostel_room,hostel_management.model_hostel_room,base.group_user,1,1,1,1
 hostel_management.access_student_details,access_student_details,hostel_management.model_student_details,base.group_user,1,1,1,1
+hostel_management.access_hostel_facilities,access_hostel_facilities,hostel_management.model_hostel_facilities,base.group_user,1,1,1,1

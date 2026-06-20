@@ -20,6 +20,7 @@
                         <group>
                             <field name="room_type"/>
                             <field name="number_of_beds"/>
+                            <field name="company_id"/>
                         </group>
                         <group>
                             <field name="rent"/>

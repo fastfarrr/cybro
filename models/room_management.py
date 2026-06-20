@@ -20,6 +20,7 @@ class Room(models.Model):
     room_number = fields.Char(string="Sequence Name", required=True,
                               readonly=True,
                               copy=False, default = lambda self: _('New'))
+    company_id = fields.Many2one("res.company",string="Company")
 
     @api.model_create_multi
     def create(self, vals_list):
