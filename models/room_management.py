@@ -1,26 +1,37 @@
 # -*- coding: utf-8 -*-
-
-from odoo import fields, models, api,_
+from odoo import fields, models, api, _
 
 
 class Room(models.Model):
+    """model for room management"""
     _name = 'hostel.room'
     _rec_name = "room_number"
     _description = "details of room"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+
+    # students_in_room=fields
+    facilities_ids= fields.Many2many('hostel.facilities',
+                                  string="Facilities")
     room_type = fields.Char(string="Room Type", required=True)
     number_of_beds = fields.Integer(string="Number of Beds", required=True)
+    company_id = fields.Many2one('res.company', store=True,
+                                 copy=False,
+                                 string="Company",
+                                 default=lambda
+                                     self: self.env.user.company_id.id)
+    currency_id = fields.Many2one('res.currency', string="Currency",
+                                  related='company_id.currency_id')
     rent = fields.Integer(string="Rent", required=True)
-    state = fields.Selection(selection=[('Empty', "Empty"),
-                                        ('Partial', "Partial"),
-                                        ('Full', "Full")], default='Empty',
+    state = fields.Selection(selection=[('empty', "Empty"),
+                                        ('partial', "Partial"),
+                                        ('full', "Full")], default='empty',
                              required=True, tracking=True, )
 
     room_number = fields.Char(string="Sequence Name", required=True,
                               readonly=True,
-                              copy=False, default = lambda self: _('New'))
-    company_id = fields.Many2one("res.company",string="Company")
+                              copy=False, default=lambda self: _('New'))
+    company_id = fields.Many2one("res.company", string="Company")
 
     @api.model_create_multi
     def create(self, vals_list):

@@ -2,4 +2,5 @@
 from . import room_management
 from . import student_details
 from . import hostel_facilities
+from . import leave_request
 

@@ -8,7 +8,7 @@
                 <sheet>
                     <header>
                         <button type="object" string="Alot" class="oe_highlight"
-                                name="Change_state"/>
+                                name="change_state" invisible="state=='confirmed'"/>
                         <field name="state" widget="statusbar"
                            options="{'clickable':1}"/>
 
