@@ -3,10 +3,10 @@
 <!--main menu-->
     <menuitem id="menu_hostel_erp_root" name="Hostel Erp"/>
 <!--    sub menu-->
-    <menuitem id="menu_hostel_erp_form" name="Hostel room"
+    <menuitem id="menu_hostel_erp_form" name="Hostel"
               parent="menu_hostel_erp_root"/>
 
-    <menuitem id="menu_hostel_erp_act" name="Hostel form"
+    <menuitem id="menu_hostel_erp_act" name="Hostel room"
               parent="menu_hostel_erp_form" action="hostel_room_action"/>
 
 
@@ -14,7 +14,7 @@
               parent="menu_hostel_erp_root" action="student_details_action"/>
 
     <menuitem id="menu_hostel_facilities" name="Hostel facilities"
-              parent="menu_hostel_erp_root" action="hostel_facilities_action"/>
+              parent="menu_hostel_erp_form" action="hostel_facilities_action"/>
 
     <menuitem id="menu_leave_request" name="Leave request"
               parent="menu_hostel_erp_root" action="leave_request_action"/>

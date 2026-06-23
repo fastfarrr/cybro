@@ -10,7 +10,7 @@ class HostelFacilities(models.Model):
     _name = 'hostel.facilities'
     _description = 'Hostel.Facilities'
 
-    name = fields.Char(String="Facility Name")
+    name = fields.Char(String="Facility Name",required=True)
     charge = fields.Monetary(String="Facility Charge")
     state = fields.Selection(selection=[('draft', "draft"),
                                         ('confirmed', "confirmed"),

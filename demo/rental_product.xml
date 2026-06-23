@@ -1,0 +1,10 @@
+<odoo>
+
+<data noupdate="1">
+    <record id="rental_product1" model="product.template">
+        <field name="name">Room rent</field>
+        <field name="list_price">50.0</field>
+    </record>
+
+</data>
+    </odoo>

@@ -11,14 +11,18 @@
     'application': True,
     'installable': True,
     # 'auto_install':True,
-    'depends': ['mail'],
+    'depends': ['mail','sale'],
     'data': [
-        "demo/demo.xml",
         "security/ir.model.access.csv",
+        "demo/rental_product.xml",
         "data/sequence_data.xml",
         "views/hostel_leave_views.xml",
         "views/hostel_room_views.xml",
         "views/hostel_student_views.xml",
         "views/hostel_facilities.xml",
-        "views/hostel_menu_views.xml"]
+        "views/hostel_menu_views.xml"],
+
+    'demo':[
+        "demo/demo.xml",
+    ]
 }

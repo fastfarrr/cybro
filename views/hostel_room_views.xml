@@ -8,32 +8,38 @@
                 <sheet>
                     <header>
                         <button type="object" string="Alot" class="oe_highlight"
-                                name="change_state" invisible="state=='confirmed'"/>
-                        <field name="state" widget="statusbar"
-                           options="{'clickable':1}"/>
+                                name="change_state"
+                                invisible="is_button_clicked == True"
+                        />
+                        <h1>
+                            <field name="student_id"/>
+                        </h1>
 
 
                     </header>
-                     <div style="width:20px">
-                            <h1>
-                            <field name="student_id"/>
-                            </h1>
-                        </div>
+
+                    <field name="image" widget="image"
+                           class="oe_left" nolabel="1" style="max-width:80px; max-height:80px"/>
                     <group>
                         <group>
+
                             <field name="student_name"/>
                             <field name="dob"/>
                             <field name="student_age"/>
                             <field name="is_email_from"/>
-                            <field name="room_id" readonly="state == 'confirmed'"/>
-                            <field name="email"/>
-                            <field name="company_id"/>
-                        </group>
-                        <group>
-                            <field name="image" widget="image"
-                                   class="oe_avatar" nolabel="1"/>
 
                         </group>
+                        <group>
+                            <field name="room_id"/>
+                            <!--                                   readonly="state == 'confirmed'"/>-->
+                            <field name="email"/>
+                            <field name="company_id"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+
+                        </group>
+
                     </group>
                     <group>
                         <notebook>
@@ -42,9 +48,12 @@
                                   name="contact_address">
                                 <group>
                                     <field name="street" placeholder="street"/>
-                                    <field name="state_id" placeholder="state"/>
-                                    <field name="country_id" placeholder="country"/>
-                                    <field name="zip_code" placeholder="zipcode"/>
+                                    <field name="state_id" placeholder="state"
+                                           domain="[('country_id', '=', country_id)]"/>
+                                    <field name="country_id"
+                                           placeholder="country"/>
+                                    <field name="zip_code"
+                                           placeholder="zipcode"/>
                                 </group>
                             </page>
 

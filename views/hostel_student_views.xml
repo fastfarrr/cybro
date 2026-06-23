@@ -10,11 +10,11 @@
                 <field name="room_type"/>
                 <field name="state"/>
                 <filter name="rooms_available" string="Rooms available"
-                        domain="[('state', '=' , 'partial')]"/>
-<!--                <group expand="0" string="Group By">-->
-<!--                    <filter string="Count of bed" name="count_of_beds" context="{'group_by' : 'number_of_beds'}"/>-->
-
-<!--                </group>-->
+                        domain="['|',('state', '=' , 'partial'),('state','=','empty')]"/>
+                <group>
+                    <filter string="Count of bed" name="count_of_beds"
+                            context="{'group_by' : 'number_of_beds'}"/>
+                </group>
             </search>
         </field>
     </record>
@@ -48,7 +48,23 @@
                             <field name="currency_id" invisible="1"/>
                             <field name="rent" widget="monetary"/>
                             <field name="state"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="total_rent"/>
+
                         </group>
+                    </group>
+                    <group>
+                        <notebook>
+
+                            <page string="student details"
+                                  name="student_details">
+                                <group>
+                                    <field name="student_id" nolabel="1"/>
+                                </group>
+                            </page>
+
+
+                        </notebook>
                     </group>
                 </sheet>
                 <chatter/>
@@ -63,11 +79,13 @@
         <field name="arch" type="xml">
             <list>
 
+
                 <field name="room_number"/>
                 <field name="room_type"/>
                 <field name="number_of_beds"/>
                 <field name="rent"/>
                 <field name="state"/>
+
             </list>
 
         </field>
@@ -76,7 +94,7 @@
 
 
     <record id="hostel_room_action" model="ir.actions.act_window">
-        <field name="name">Hostel form</field>
+        <field name="name">Hostel room</field>
         <field name="res_model">hostel.room</field>
         <field name="view_mode">list,form,kanban</field>
         <field name="context">{'search_default_rooms_available': 1}</field>

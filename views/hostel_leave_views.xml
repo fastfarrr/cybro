@@ -23,6 +23,18 @@
         </field>
     </record>
 
+    <record id="leave_request_list_view" model="ir.ui.view">
+        <field name="name">Leave date</field>
+        <field name="model">leave_request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="leave_date" width="85px"/>
+                <field name="arrival_date" width="85px"/>
+                <field name="status" width="85px"/>
+            </list>
+        </field>
+    </record>
+
     <record id="leave_request_action" model="ir.actions.act_window">
         <field name="name">Leave request</field>
         <field name="res_model">leave_request</field>
