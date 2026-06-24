@@ -11,15 +11,18 @@
                                 name="change_state"
                                 invisible="is_button_clicked == True"
                         />
-                        <h1>
-                            <field name="student_id"/>
-                        </h1>
 
 
                     </header>
 
+                     <h1>
+                            <field name="student_id"/>
+                        </h1>
+                    <div>
+
                     <field name="image" widget="image"
                            class="oe_left" nolabel="1" style="max-width:80px; max-height:80px"/>
+                    </div>
                     <group>
                         <group>
 

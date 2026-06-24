@@ -27,10 +27,6 @@ class Student(models.Model):
     is_email_from = fields.Boolean(string="Receive mail", default=False)
     student_id = fields.Char(string="Sequence Name", readonly=True,
                              copy=False, default=lambda self: _("New"), )
-    # state = fields.Selection(selection=[('draft', "draft"),
-    #                                     ('confirmed', "confirmed"),
-    #                                     ], default='draft',
-    #                          required=True, tracking=True, )
     company_id = fields.Many2one("res.company",
                                  string="Company", related="room_id.company_id")
 
@@ -39,6 +35,7 @@ class Student(models.Model):
     partner_id = fields.Many2one('res.partner', string="partner", store=True,
                                  copy=False, readonly=True)
     is_button_clicked = fields.Boolean(default=False)
+    invoicing=fields.Boolean(default=False)
 
     @api.model_create_multi
     def create(self, vals_list):
