@@ -13,6 +13,7 @@ class LeaveRequest(models.Model):
                                         ('approved', "Approved"),],
                              default='new',
                              required=True, tracking=True, )
+    student_id=fields.Many2one('student.details',string="Student",ondelete="cascade")
 
     def approve(self):
         """when click the button it need to change the status to approved"""
@@ -21,5 +22,5 @@ class LeaveRequest(models.Model):
     @api.constrains('arrival_date','leave_date')
     def _check_date(self):
         for record in self:
-            if record.leave_date>record.arrival_date:
+            if record.leave_date > record.arrival_date:
                 raise ValidationError("The arrival date cannot be lower than leave date")

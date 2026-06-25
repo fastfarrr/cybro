@@ -14,8 +14,9 @@
     'depends': ['mail', 'sale', 'account'],
     'data': [
         "security/ir.model.access.csv",
-        "demo/rental_product.xml",
+        "data/rental_product.xml",
         "data/sequence_data.xml",
+        "views/hostel_email_template.xml",
         "views/hostel_inherit_account_move.xml",
         "views/hostel_leave_views.xml",
         "views/hostel_room_views.xml",

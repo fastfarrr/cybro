@@ -4,7 +4,6 @@ from datetime import date
 from odoo.exceptions import UserError
 
 
-
 class Student(models.Model):
     """model for student details designed to create a student"""
     _name = 'student.details'
@@ -21,7 +20,7 @@ class Student(models.Model):
     zip_code = fields.Char(string="Zip Code", required=True)
     dob = fields.Date(string="Dob", required=True)
     room_id = fields.Many2one('hostel.room',
-                              string="Room",readonly=True)
+                              string="Room", readonly=True)
     email = fields.Char(string="Email", required=True)
     image = fields.Image(string="Image")
     is_email_from = fields.Boolean(string="Receive mail", default=False)
@@ -35,7 +34,10 @@ class Student(models.Model):
     partner_id = fields.Many2one('res.partner', string="partner", store=True,
                                  copy=False, readonly=True)
     is_button_clicked = fields.Boolean(default=False)
-    invoicing=fields.Boolean(default=False)
+    is_vacate_clicked = fields.Boolean(default=False)
+    invoicing = fields.Boolean(default=False)
+    invoice_count = fields.Integer(compute="_compute_invoice_count",
+                                   string="Invoice Count")
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -70,7 +72,6 @@ class Student(models.Model):
                 rec.room_id = room.id
                 print(rec.room_id)
 
-
             """to change the state based on available number of beds"""
 
             students_count = self.env['student.details'].search_count([
@@ -82,8 +83,7 @@ class Student(models.Model):
             else:
                 rec.room_id.state = 'full'
             self.is_button_clicked = True
-
-
+            self.is_vacate_clicked = False
 
     @api.depends('dob')
     def _compute_student_age(self):
@@ -97,3 +97,54 @@ class Student(models.Model):
                 )
             else:
                 record.student_age = 0
+
+    @api.depends('student_id')
+    def _compute_invoice_count(self):
+        """to count the invoice for a student"""
+        for student in self:
+            student.invoice_count = self.env['account.move'].search_count([
+                ('student_id', '=', student.id),
+                ('move_type', '=', 'out_invoice'),
+            ])
+
+    def action_view_invoices(self):
+        """creating the smart button"""
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.move',
+            'view_mode': 'list',
+            'target': 'current',
+            'domain': [
+                ('student_id', '=', self.id),
+                ('move_type', '=', 'out_invoice')
+            ]
+        }
+
+    def vacate_student(self):
+        """function for vacate student room"""
+        for rec in self:
+            if rec.room_id:
+                room = rec.room_id
+                rec.room_id = False
+
+                students_count = self.env['student.details'].search_count([
+                    ('room_id', '=', room.id)
+
+                ])
+                if students_count == 0:
+                    room.state = 'empty'
+                elif students_count < room.number_of_beds:
+                    room.state = 'partial'
+                else:
+                    room.state = 'full'
+
+            else:
+                raise UserError(_("Not assigned room"))
+
+        self.is_button_clicked = False
+        self.is_vacate_clicked = True
+
+
+
+

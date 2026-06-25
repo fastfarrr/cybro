@@ -42,9 +42,6 @@ class Room(models.Model):
                                  compute='_total_rent')
     invoice_id = fields.Many2one('account.move', string="Invoice",
                                  readonly=True)
-    rental_product_id = fields.Many2one('product.template',
-                                        string="Rental Product",
-                                        default=lambda self: self.env.ref('hostel_management.rental_product1',raise_if_not_found=False))
 
 
     @api.model_create_multi
@@ -67,6 +64,7 @@ class Room(models.Model):
             record.total_rent = total_charge + record.rent
 
     def monthly_invoice(self):
+        rental_product= self.env.ref('hostel_management.rental_product1',raise_if_not_found=False)
         for room in self:
             for student in room.student_id:
                 invoice_vals = {
@@ -75,8 +73,7 @@ class Room(models.Model):
                     'partner_id': room.company_id.id,
                     'student_id': student.id,
                     'invoice_line_ids': [(0, 0, {
-                        'product_id': room.rental_product_id.id,
-                        'name':room.rental_product_id.name,
+                        'product_id': rental_product.id,
                         'quantity': 1,
                         'price_unit': room.total_rent,
                     })],
@@ -94,3 +91,4 @@ class Room(models.Model):
                     'target': 'current'
 
                 }
+

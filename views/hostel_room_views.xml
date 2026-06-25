@@ -6,23 +6,37 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil">
+                            <field name="invoice_count" widget="statinfo"
+                                   string="Invoices"/>
+                        </button>
+                    </div>
                     <header>
                         <button type="object" string="Alot" class="oe_highlight"
                                 name="change_state"
-                                invisible="is_button_clicked == True"
+                                invisible="is_button_clicked == True"/>
+                        <button type="object" string="Vacate"
+                                class="oe_highlight"
+                                name="vacate_student"
+                                invisible="is_vacate_clicked == True"
                         />
-
 
                     </header>
 
-                     <h1>
-                            <field name="student_id"/>
-                        </h1>
+                    <h1>
+                        <field name="student_id"/>
+                    </h1>
                     <div>
 
-                    <field name="image" widget="image"
-                           class="oe_left" nolabel="1" style="max-width:80px; max-height:80px"/>
+                        <field name="image" widget="image"
+                               class="oe_left" nolabel="1"
+                               style="max-width:80px; max-height:80px"/>
                     </div>
+
                     <group>
                         <group>
 
@@ -34,7 +48,6 @@
                         </group>
                         <group>
                             <field name="room_id"/>
-                            <!--                                   readonly="state == 'confirmed'"/>-->
                             <field name="email"/>
                             <field name="company_id"/>
                             <field name="partner_id"/>

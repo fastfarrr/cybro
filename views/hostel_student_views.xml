@@ -53,7 +53,6 @@
                             <field name="state"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="total_rent"/>
-                            <field name="rental_product_id"/>
 
                         </group>
                     </group>
@@ -106,6 +105,7 @@
             <p>create your first data</p>
         </field>
     </record>
+
 
 
 </odoo>
