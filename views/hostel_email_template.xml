@@ -9,10 +9,11 @@
            <field name="body_html" type="html">
                <div style="margin: 0px; padding: 0px;">
                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                       Hello,<span style="font-weight: bold;" t-out="object.user_id.partner_id.email"/>,
+                       Hello,<span style="font-weight: bold;" t-out="object.student_id.student_name"/>
                        <br/>
                        <br/>
-                       Here is your invoice <span style="font-weight: bold;" t-out="object.name"/> please check into it and confirm everything is alright
+                       Here is your invoice <span style="font-weight: bold;" t-out="object.name"/> please check into it and confirm everything is alright<br/>
+                       Invoice amount is <span t-out="object.amount_total"/>
                    </p>
                </div>
            </field>

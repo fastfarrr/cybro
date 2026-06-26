@@ -4,7 +4,8 @@ from odoo import models, fields
 
 class Move(models.Model):
     _inherit = "account.move"
-    student_id = fields.Many2one('student.details', string="Student")
+    student_id = fields.Many2one('student.details',
+                                 string="Student")
 
     def action_post(self):
         res = super().action_post()

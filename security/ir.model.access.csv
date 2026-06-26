@@ -3,3 +3,4 @@ hostel_management.access_hostel_room,access_hostel_room,hostel_management.model_
 hostel_management.access_student_details,access_student_details,hostel_management.model_student_details,base.group_user,1,1,1,1
 hostel_management.access_hostel_facilities,access_hostel_facilities,hostel_management.model_hostel_facilities,base.group_user,1,1,1,1
 hostel_management.access_leave_request,access_leave_request,hostel_management.model_leave_request,base.group_user,1,1,1,1
+hostel_management.access_hostel_cleaning,access_hostel_cleaning,hostel_management.model_hostel_cleaning,base.group_user,1,1,1,1

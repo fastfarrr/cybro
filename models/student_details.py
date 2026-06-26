@@ -29,15 +29,23 @@ class Student(models.Model):
     company_id = fields.Many2one("res.company",
                                  string="Company", related="room_id.company_id")
 
+    currency_id = fields.Many2one('res.currency', string="Currency",
+                                  related='company_id.currency_id')
+
     student_age = fields.Integer(string="Age",
                                  compute="_compute_student_age", store=True)
-    partner_id = fields.Many2one('res.partner', string="partner", store=True,
-                                 copy=False, readonly=True)
+    partner_id = fields.Many2one('res.partner', string="partner",
+                                 store=True,
+                                 copy=False,
+                                 readonly=True)
     is_button_clicked = fields.Boolean(default=False)
     is_vacate_clicked = fields.Boolean(default=False)
-    invoicing = fields.Boolean(default=False)
     invoice_count = fields.Integer(compute="_compute_invoice_count",
-                                   string="Invoice Count")
+                                   string="Invoice Count",store=True)
+    active=fields.Boolean(default=True)
+    employee_id=fields.Many2one('hr.employee')
+    monthly_amount=fields.Monetary(string="Monthly Amount")
+
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -70,7 +78,6 @@ class Student(models.Model):
                     raise UserError(_("No room available"))
 
                 rec.room_id = room.id
-                print(rec.room_id)
 
             """to change the state based on available number of beds"""
 
@@ -82,6 +89,7 @@ class Student(models.Model):
                 rec.room_id.state = 'partial'
             else:
                 rec.room_id.state = 'full'
+            # To make hidden and visible button called Allot,Vacate
             self.is_button_clicked = True
             self.is_vacate_clicked = False
 
@@ -113,6 +121,7 @@ class Student(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'account.move',
+            'name':'Invoice',
             'view_mode': 'list',
             'target': 'current',
             'domain': [
@@ -133,17 +142,60 @@ class Student(models.Model):
 
                 ])
                 if students_count == 0:
-                    room.state = 'empty'
+                    room.state = 'cleaning'
+
+                    if room.state == 'cleaning':
+                        self.env['hostel.cleaning'].create({
+                            'Room' : room.id,
+                            'start_time': date.today(),
+                            'company_id': room.company_id.id,
+                            'cleaning_staff_id':rec.employee_id.id
+                        })
+
+
+
                 elif students_count < room.number_of_beds:
                     room.state = 'partial'
                 else:
                     room.state = 'full'
-
             else:
                 raise UserError(_("Not assigned room"))
 
+
+
+        # to archive the students while clicking this button
+        self.active=False
+
+        # To make hidden and visible button called Allot,Vacate
         self.is_button_clicked = False
         self.is_vacate_clicked = True
+
+
+
+    def unlink(self):
+        """to delete the student with its leave request"""
+        rooms=[]
+        for rec in self:
+            if rec.room_id:
+                rooms.append(rec.room_id)
+            leave_requests = self.env['leave_request'].search([
+                ('student_id', '=', rec.id)
+            ])
+            leave_requests.unlink()
+            res = super(Student, self).unlink()
+
+            for room in rooms:
+                student_count= self.env['student.details'].search_count([
+                    ('room_id', '=', room.id)
+
+                ])
+                if student_count == 0:
+                    room.state='empty'
+                elif student_count<rec.room.number_of_beds:
+                    room.state = 'partial'
+                else:
+                    room.state = 'full'
+        return res
 
 
 

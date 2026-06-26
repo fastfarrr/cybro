@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hostel_cleaning_action" model="ir.actions.act_window">
+        <field name="name">Hostel cleaning</field>
+        <field name="res_model">hostel.cleaning</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>create your first data</p>
+        </field>
+    </record>
+
+    <record id="hostel_cleaning_form" model="ir.ui.view">
+        <field name="name">hostel cleaning form view</field>
+        <field name="model">hostel.cleaning</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button type="object" string="Assign" name="assign_staff"
+                            class="oe_highlight"
+                            invisible="state =='assigned'"/>
+                    <button type="object" string="Complete"
+                            name="completed_cleaning" class="oe_highlight"
+                            invisible="state == 'done'"/>
+
+                </header>
+
+                <sheet>
+                    <group>
+
+                        <field name="Room"/>
+                        <field name="start_time"/>
+                        <field name="cleaning_staff_id"/>
+                        <field name="company_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hostel_cleaning_list_view" model="ir.ui.view">
+        <field name="name">Hostel cleaning list view</field>
+        <field name="model">hostel.cleaning</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="Room" width="85px"/>
+                <field name="state" width="85px"/>
+                <field name="cleaning_staff_id" width="85px"/>
+            </list>
+        </field>
+    </record>
+
+
+</odoo>

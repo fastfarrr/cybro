@@ -44,6 +44,8 @@
                             <field name="dob"/>
                             <field name="student_age"/>
                             <field name="is_email_from"/>
+                            <field name="employee_id"/>
+
 
                         </group>
                         <group>
@@ -51,6 +53,8 @@
                             <field name="email"/>
                             <field name="company_id"/>
                             <field name="partner_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="monthly_amount" widget="monetary"/>
                         </group>
                         <group>
 
@@ -81,6 +85,18 @@
             </form>
         </field>
 
+    </record>
+
+
+    <record id="student_details_search_view" model="ir.ui.view">
+        <field name="name">Search view</field>
+        <field name="model">student.details</field>
+        <field name="arch" type="xml">
+        <search string="search">
+            <filter string="Archived" domain="[('active','=','False')]"
+                    name="Archive"/>
+        </search>
+        </field>
     </record>
 
 

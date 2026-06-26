@@ -4,4 +4,4 @@ from . import student_details
 from . import hostel_facilities
 from . import leave_request
 from . import move
-
+from . import cleaning

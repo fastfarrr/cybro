@@ -18,5 +18,8 @@
 
     <menuitem id="menu_leave_request" name="Leave request"
               parent="menu_hostel_erp_root" action="leave_request_action"/>
+    <menuitem id="menu_hostel_cleaning" name="hostel cleaning"
+              parent="menu_hostel_erp_root" action="hostel_cleaning_action"/>
+
 
 </odoo> 

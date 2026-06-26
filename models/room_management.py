@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from email.policy import default
+
 
 from odoo import fields, models, api, _
 
@@ -29,19 +29,22 @@ class Room(models.Model):
     rent = fields.Integer(string="Rent", required=True)
     state = fields.Selection(selection=[('empty', "Empty"),
                                         ('partial', "Partial"),
-                                        ('full', "Full")], default='empty',
-                             required=True, tracking=True, )
+                                        ('full', "Full"),
+                                        ('cleaning','Cleaning')],
+                             default='empty',required=True, tracking=True, )
 
     room_number = fields.Char(string="Sequence Name", required=True,
                               readonly=True,
                               copy=False, default=lambda self: _('New'))
-    # company_id = fields.Many2one("res.company", string="Company")
+
     student_id = fields.One2many('student.details',
                                  'room_id', readonly=True)
     total_rent = fields.Monetary(string="Total Rent", readonly=True,
                                  compute='_total_rent')
     invoice_id = fields.Many2one('account.move', string="Invoice",
                                  readonly=True)
+    invoice_status=fields.Selection(selection=[('pending', "Pending"),
+                                               ('done', "Done"'')])
 
 
     @api.model_create_multi
@@ -64,7 +67,8 @@ class Room(models.Model):
             record.total_rent = total_charge + record.rent
 
     def monthly_invoice(self):
-        rental_product= self.env.ref('hostel_management.rental_product1',raise_if_not_found=False)
+        rental_product= self.env.ref('hostel_management.rental_product1',
+                                     raise_if_not_found=False)
         for room in self:
             for student in room.student_id:
                 invoice_vals = {
@@ -79,7 +83,6 @@ class Room(models.Model):
                     })],
 
                 }
-                print(invoice_vals)
 
                 invoice = self.env['account.move'].create(invoice_vals)
                 return {

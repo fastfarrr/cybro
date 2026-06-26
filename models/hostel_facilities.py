@@ -12,10 +12,6 @@ class HostelFacilities(models.Model):
 
     name = fields.Char(String="Facility Name",required=True)
     charge = fields.Monetary(String="Facility Charge")
-    state = fields.Selection(selection=[('draft', "draft"),
-                                        ('confirmed', "confirmed"),
-                                        ], default='draft',
-                             required=True, tracking=True, )
     company_id = fields.Many2one('res.company',
                                  string="company_id",
                                  default=lambda self: self.env.user.
