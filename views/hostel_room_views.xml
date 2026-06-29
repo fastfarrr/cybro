@@ -18,11 +18,11 @@
                     <header>
                         <button type="object" string="Alot" class="oe_highlight"
                                 name="change_state"
-                                invisible="is_button_clicked == True"/>
+                                invisible="is_button_clicked"/>
                         <button type="object" string="Vacate"
                                 class="oe_highlight"
                                 name="vacate_student"
-                                invisible="is_vacate_clicked == True"
+                                invisible="is_vacate_clicked"
                         />
 
                     </header>
@@ -45,6 +45,8 @@
                             <field name="student_age"/>
                             <field name="is_email_from"/>
                             <field name="employee_id"/>
+                            <field name="invoice_status"/>
+
 
 
                         </group>

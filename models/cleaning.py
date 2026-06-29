@@ -5,9 +5,9 @@ from odoo.exceptions import UserError
 class Cleaning(models.Model):
     _name = 'hostel.cleaning'
     _description = 'cleaning'
-    _rec_name = 'Room'
+    _rec_name = 'room'
 
-    Room = fields.Many2one('hostel.room')
+    room = fields.Many2one('hostel.room')
     start_time = fields.Datetime(required=True)
     cleaning_staff_id=fields.Many2one('hr.employee')
     company_id = fields.Many2one('res.company')

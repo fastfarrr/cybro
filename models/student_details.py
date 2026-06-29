@@ -41,11 +41,13 @@ class Student(models.Model):
     is_button_clicked = fields.Boolean(default=False)
     is_vacate_clicked = fields.Boolean(default=False)
     invoice_count = fields.Integer(compute="_compute_invoice_count",
-                                   string="Invoice Count",store=True)
-    active=fields.Boolean(default=True)
-    employee_id=fields.Many2one('hr.employee')
-    monthly_amount=fields.Monetary(string="Monthly Amount")
-
+                                   string="Invoice Count", store=True)
+    active = fields.Boolean(default=True)
+    employee_id = fields.Many2one('hr.employee', readonly=True)
+    monthly_amount = fields.Monetary(string="Monthly Amount")
+    invoice_status = fields.Selection(selection=[('pending', "Pending"),
+                                                 ('done', "Done"'')],
+                                      compute='_compute_invoice_status')
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -78,6 +80,7 @@ class Student(models.Model):
                     raise UserError(_("No room available"))
 
                 rec.room_id = room.id
+                rec.employee_id = room.cleaning_staff
 
             """to change the state based on available number of beds"""
 
@@ -113,6 +116,7 @@ class Student(models.Model):
             student.invoice_count = self.env['account.move'].search_count([
                 ('student_id', '=', student.id),
                 ('move_type', '=', 'out_invoice'),
+
             ])
 
     def action_view_invoices(self):
@@ -121,7 +125,7 @@ class Student(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'account.move',
-            'name':'Invoice',
+            'name': 'Invoice',
             'view_mode': 'list',
             'target': 'current',
             'domain': [
@@ -146,10 +150,10 @@ class Student(models.Model):
 
                     if room.state == 'cleaning':
                         self.env['hostel.cleaning'].create({
-                            'Room' : room.id,
+                            'room': room.id,
                             'start_time': date.today(),
                             'company_id': room.company_id.id,
-                            'cleaning_staff_id':rec.employee_id.id
+                            'cleaning_staff_id': rec.employee_id.id
                         })
 
 
@@ -161,20 +165,16 @@ class Student(models.Model):
             else:
                 raise UserError(_("Not assigned room"))
 
-
-
         # to archive the students while clicking this button
-        self.active=False
+        self.active = False
 
         # To make hidden and visible button called Allot,Vacate
         self.is_button_clicked = False
         self.is_vacate_clicked = True
 
-
-
     def unlink(self):
         """to delete the student with its leave request"""
-        rooms=[]
+        rooms = []
         for rec in self:
             if rec.room_id:
                 rooms.append(rec.room_id)
@@ -185,18 +185,35 @@ class Student(models.Model):
             res = super(Student, self).unlink()
 
             for room in rooms:
-                student_count= self.env['student.details'].search_count([
+                student_count = self.env['student.details'].search_count([
                     ('room_id', '=', room.id)
 
                 ])
                 if student_count == 0:
-                    room.state='empty'
-                elif student_count<rec.room.number_of_beds:
+                    room.state = 'empty'
+                elif student_count < rec.room.number_of_beds:
                     room.state = 'partial'
                 else:
                     room.state = 'full'
         return res
 
+    @api.depends('invoice_count')
+    def _compute_invoice_status(self):
+        for rec in self:
+            invoices = self.env['account.move'].search([
+                ('student_id', '=', rec.id),
+                ('move_type', '=', 'out_invoice'),
+                ('state', '=', 'posted')
+            ])
 
+            rec.invoice_status = 'done'  # default value
 
+            if not invoices:
+                rec.invoice_status = 'pending'
+            else:
+                for invoice in invoices:
+                    if invoice.amount_residual > 0:
+                        rec.invoice_status = 'pending'
+                        break
 
+    

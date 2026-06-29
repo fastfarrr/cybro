@@ -30,8 +30,8 @@ class Room(models.Model):
     state = fields.Selection(selection=[('empty', "Empty"),
                                         ('partial', "Partial"),
                                         ('full', "Full"),
-                                        ('cleaning','Cleaning')],
-                             default='empty',required=True, tracking=True, )
+                                        ('cleaning', 'Cleaning')],
+                             default='empty', required=True, tracking=True, )
 
     room_number = fields.Char(string="Sequence Name", required=True,
                               readonly=True,
@@ -43,9 +43,10 @@ class Room(models.Model):
                                  compute='_total_rent')
     invoice_id = fields.Many2one('account.move', string="Invoice",
                                  readonly=True)
-    invoice_status=fields.Selection(selection=[('pending', "Pending"),
-                                               ('done', "Done"'')])
 
+    cleaning_staff = fields.Many2one('hr.employee')
+    pending_amount = fields.Monetary(string="Pending Amount", readonly=True,
+                                     compute='_compute_pending_amount')
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -67,8 +68,8 @@ class Room(models.Model):
             record.total_rent = total_charge + record.rent
 
     def monthly_invoice(self):
-        rental_product= self.env.ref('hostel_management.rental_product1',
-                                     raise_if_not_found=False)
+        rental_product = self.env.ref('hostel_management.rental_product1',
+                                      raise_if_not_found=False)
         for room in self:
             for student in room.student_id:
                 invoice_vals = {
@@ -95,3 +96,15 @@ class Room(models.Model):
 
                 }
 
+    def _compute_pending_amount(self):
+        for record in self:
+            invoices = self.env['account.move'].search([
+                ('move_type', '=', 'out_invoice'),
+                ('state', '=', 'posted')
+            ])
+            if not invoices:
+                record.pending_amount = 0
+            else:
+                for rec in invoices:
+                    if rec.amount_residual:
+                        record.pending_amount = invoices.amount_residual

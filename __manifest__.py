@@ -14,6 +14,7 @@
     'depends': ['mail', 'sale_management', 'account'],
     'data': [
         "security/ir.model.access.csv",
+        "data/ir_cron_data.xml",
         "data/rental_product.xml",
         "data/sequence_data.xml",
         "views/hostel_cleaning.xml",

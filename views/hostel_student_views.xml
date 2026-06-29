@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+
+<!--  search view -->
     <record id="hostel_room_search_view" model="ir.ui.view">
         <field name="name">Custom search view</field>
         <field name="model">hostel.room</field>
@@ -10,7 +12,7 @@
                 <field name="room_type"/>
                 <field name="state"/>
                 <filter name="rooms_available" string="Rooms available"
-                        domain="['|',('state', '=' , 'partial'),('state','=','empty')]"/>
+                        domain="[('state', 'in' , ['empty','partial','cleaning'])]"/>
                 <group>
                     <filter string="Count of bed" name="count_of_beds"
                             context="{'group_by' : 'number_of_beds'}"/>
@@ -46,6 +48,7 @@
                             <field name="company_id"/>
                             <field name="facilities_ids"
                                    widget="many2many_tags"/>
+                            <field name="cleaning_staff"/>
                         </group>
                         <group>
                             <field name="currency_id" invisible="1"/>
@@ -53,6 +56,7 @@
                             <field name="state"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="total_rent"/>
+                            <field name="pending_amount"/>
 
                         </group>
                     </group>
