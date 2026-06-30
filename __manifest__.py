@@ -11,9 +11,10 @@
     'application': True,
     'installable': True,
     'auto_install':True,
-    'depends': ['mail', 'sale_management', 'account'],
+    'depends': ['mail', 'sale_management', 'account','hr','base_automation'],
     'data': [
         "security/ir.model.access.csv",
+        "data/user_cron_data.xml",
         "data/ir_cron_data.xml",
         "data/rental_product.xml",
         "data/sequence_data.xml",

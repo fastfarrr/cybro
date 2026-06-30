@@ -39,15 +39,17 @@ class Student(models.Model):
                                  copy=False,
                                  readonly=True)
     is_button_clicked = fields.Boolean(default=False)
-    is_vacate_clicked = fields.Boolean(default=False)
+    is_vacate_clicked = fields.Boolean(default=True)
     invoice_count = fields.Integer(compute="_compute_invoice_count",
-                                   string="Invoice Count", store=True)
+                                   string="Invoice Count")
     active = fields.Boolean(default=True)
     employee_id = fields.Many2one('hr.employee', readonly=True)
-    monthly_amount = fields.Monetary(string="Monthly Amount")
+    monthly_amount = fields.Monetary(string="Monthly Amount",
+                                     related="room_id.total_rent")
     invoice_status = fields.Selection(selection=[('pending', "Pending"),
                                                  ('done', "Done"'')],
                                       compute='_compute_invoice_status')
+    user_id=fields.Many2one('res.users')
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -72,7 +74,7 @@ class Student(models.Model):
         """to assign room automatically based on available bedspace"""
 
         for rec in self:
-            if not rec.room_id:
+            if not rec.room_id :
                 room = self.env['hostel.room'].search(
                     [('state', '!=', 'full')], limit=1)
 
@@ -95,6 +97,11 @@ class Student(models.Model):
             # To make hidden and visible button called Allot,Vacate
             self.is_button_clicked = True
             self.is_vacate_clicked = False
+            self.active=True
+
+            print()
+
+
 
     @api.depends('dob')
     def _compute_student_age(self):
@@ -109,7 +116,6 @@ class Student(models.Model):
             else:
                 record.student_age = 0
 
-    @api.depends('student_id')
     def _compute_invoice_count(self):
         """to count the invoice for a student"""
         for student in self:
@@ -163,7 +169,7 @@ class Student(models.Model):
                 else:
                     room.state = 'full'
             else:
-                raise UserError(_("Not assigned room"))
+                raise UserError(_("Not assigned any room"))
 
         # to archive the students while clicking this button
         self.active = False
@@ -216,4 +222,19 @@ class Student(models.Model):
                         rec.invoice_status = 'pending'
                         break
 
-    
+
+
+    def _create_user(self):
+        for student in self:
+            if not student.user_id:
+                user = self.env["res.users"].create({
+                    "name": student.student_name,
+                    "login": student.email,
+                    "email": student.email,
+                    "password": "demo431",
+                    "partner_id": student.partner_id.id,
+                })
+                print(user)
+                student.user_id = user.id
+
+

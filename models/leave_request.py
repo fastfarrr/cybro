@@ -54,9 +54,9 @@ class LeaveRequest(models.Model):
             room.state = 'full'
 
 
-@api.constrains('arrival_date', 'leave_date')
-def _check_date(self):
-    for record in self:
-        if record.leave_date > record.arrival_date:
-            raise ValidationError(
-                "The arrival date cannot be lower than leave date")
+    @api.constrains('arrival_date', 'leave_date')
+    def _check_date(self):
+        for record in self:
+            if record.leave_date > record.arrival_date:
+                raise ValidationError(
+                    "The arrival date cannot be lower than leave date")

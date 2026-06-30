@@ -11,7 +11,6 @@ class Room(models.Model):
     _description = "details of room"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    # students_in_room=fields
     facilities_ids = fields.Many2many('hostel.facilities',
                                       string="Facilities")
     room_type = fields.Selection([('dorm', 'Dorm'),
@@ -97,14 +96,14 @@ class Room(models.Model):
                 }
 
     def _compute_pending_amount(self):
+        '''to calculate pending amount based on the unpaid invoices'''
         for record in self:
+            student_ids = record.student_id.ids
             invoices = self.env['account.move'].search([
+                ('student_id', 'in', student_ids),
                 ('move_type', '=', 'out_invoice'),
                 ('state', '=', 'posted')
             ])
-            if not invoices:
-                record.pending_amount = 0
-            else:
-                for rec in invoices:
-                    if rec.amount_residual:
-                        record.pending_amount = invoices.amount_residual
+            print(invoices)
+            record.pending_amount = sum(invoices.mapped('amount_residual'))
+
