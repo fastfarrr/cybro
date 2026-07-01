@@ -18,11 +18,11 @@
                     <header>
                         <button type="object" string="Alot" class="oe_highlight"
                                 name="change_state"
-                                invisible="is_button_clicked"/>
+                                invisible="room_id"/>
                         <button type="object" string="Vacate"
                                 class="oe_highlight"
                                 name="vacate_student"
-                                invisible="is_vacate_clicked"
+                                invisible="not room_id"
                         />
 
                     </header>

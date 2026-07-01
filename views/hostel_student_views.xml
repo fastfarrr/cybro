@@ -2,7 +2,7 @@
 <odoo>
 
 
-<!--  search view -->
+    <!--  search view -->
     <record id="hostel_room_search_view" model="ir.ui.view">
         <field name="name">Custom search view</field>
         <field name="model">hostel.room</field>
@@ -29,13 +29,23 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <field name="state" widget="statusbar"
-                           options="{'clickable':1}"/>
+                    <field name="state" widget="statusbar"/>
+                    <!--                           options="{'clickable':1}"/>-->
                     <button type="object" class="oe_highlight"
                             string="Monthly invoice" name="monthly_invoice"/>
 
                 </header>
                 <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil">
+                            <field name="invoice_count" widget="statinfo"
+                                   string="Invoices"/>
+                        </button>
+                    </div>
                     <group>
                         <h1>
                             <field name="room_number" readonly="1"/>
@@ -48,7 +58,7 @@
                             <field name="company_id"/>
                             <field name="facilities_ids"
                                    widget="many2many_tags"/>
-                            <field name="cleaning_staff"/>
+                            <!--                            <field name="cleaning_staff"/>-->
                         </group>
                         <group>
                             <field name="currency_id" invisible="1"/>
@@ -66,7 +76,7 @@
                             <page string="student details"
                                   name="student_details">
                                 <group>
-                                    <field name="student_id" nolabel="1"/>
+                                    <field name="student_ids" nolabel="1"/>
                                 </group>
                             </page>
 
@@ -109,7 +119,6 @@
             <p>create your first data</p>
         </field>
     </record>
-
 
 
 </odoo>

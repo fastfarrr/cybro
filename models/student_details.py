@@ -38,18 +38,15 @@ class Student(models.Model):
                                  store=True,
                                  copy=False,
                                  readonly=True)
-    is_button_clicked = fields.Boolean(default=False)
-    is_vacate_clicked = fields.Boolean(default=True)
     invoice_count = fields.Integer(compute="_compute_invoice_count",
                                    string="Invoice Count")
     active = fields.Boolean(default=True)
-    employee_id = fields.Many2one('hr.employee', readonly=True)
     monthly_amount = fields.Monetary(string="Monthly Amount",
                                      related="room_id.total_rent")
     invoice_status = fields.Selection(selection=[('pending', "Pending"),
                                                  ('done', "Done"'')],
                                       compute='_compute_invoice_status')
-    user_id=fields.Many2one('res.users')
+    user_id = fields.Many2one('res.users',readonly=True)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -74,7 +71,7 @@ class Student(models.Model):
         """to assign room automatically based on available bedspace"""
 
         for rec in self:
-            if not rec.room_id :
+            if not rec.room_id:
                 room = self.env['hostel.room'].search(
                     [('state', '!=', 'full')], limit=1)
 
@@ -82,7 +79,6 @@ class Student(models.Model):
                     raise UserError(_("No room available"))
 
                 rec.room_id = room.id
-                rec.employee_id = room.cleaning_staff
 
             """to change the state based on available number of beds"""
 
@@ -94,14 +90,9 @@ class Student(models.Model):
                 rec.room_id.state = 'partial'
             else:
                 rec.room_id.state = 'full'
-            # To make hidden and visible button called Allot,Vacate
-            self.is_button_clicked = True
-            self.is_vacate_clicked = False
-            self.active=True
 
-            print()
-
-
+            # to unarchive the student
+            self.active = True
 
     @api.depends('dob')
     def _compute_student_age(self):
@@ -132,7 +123,7 @@ class Student(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'account.move',
             'name': 'Invoice',
-            'view_mode': 'list',
+            "views": [[False, "list"], [False, "form"]],
             'target': 'current',
             'domain': [
                 ('student_id', '=', self.id),
@@ -153,58 +144,59 @@ class Student(models.Model):
                 ])
                 if students_count == 0:
                     room.state = 'cleaning'
+                    print(room.state)
 
                     if room.state == 'cleaning':
                         self.env['hostel.cleaning'].create({
                             'room': room.id,
                             'start_time': date.today(),
                             'company_id': room.company_id.id,
-                            'cleaning_staff_id': rec.employee_id.id
+                            # 'staff_id': self.env.user.id
                         })
+                        a=self.env['hostel.cleaning'].search([
+                            ('state','=','done')
+                        ])
+                        if a:
+                            room.state='empty'
+                            print(room.state)
 
 
-
-                elif students_count < room.number_of_beds:
-                    room.state = 'partial'
-                else:
-                    room.state = 'full'
             else:
                 raise UserError(_("Not assigned any room"))
 
         # to archive the students while clicking this button
         self.active = False
 
-        # To make hidden and visible button called Allot,Vacate
-        self.is_button_clicked = False
-        self.is_vacate_clicked = True
 
-    def unlink(self):
-        """to delete the student with its leave request"""
-        rooms = []
-        for rec in self:
-            if rec.room_id:
-                rooms.append(rec.room_id)
-            leave_requests = self.env['leave_request'].search([
-                ('student_id', '=', rec.id)
-            ])
-            leave_requests.unlink()
-            res = super(Student, self).unlink()
 
-            for room in rooms:
-                student_count = self.env['student.details'].search_count([
-                    ('room_id', '=', room.id)
-
-                ])
-                if student_count == 0:
-                    room.state = 'empty'
-                elif student_count < rec.room.number_of_beds:
-                    room.state = 'partial'
-                else:
-                    room.state = 'full'
-        return res
+    # def unlink(self):
+    #     """to delete the student with its leave request"""
+    #     rooms = []
+    #     for rec in self:
+    #         if rec.room_id:
+    #             rooms.append(rec.room_id)
+    #         leave_requests = self.env['leave_request'].search([
+    #             ('student_id', '=', rec.id)
+    #         ])
+    #         leave_requests.unlink()
+    #         res = super(Student, self).unlink()
+    #
+    #         for room in rooms:
+    #             student_count = self.env['student.details'].search_count([
+    #                 ('room_id', '=', room.id)
+    #
+    #             ])
+    #             if student_count == 0:
+    #                 room.state = 'empty'
+    #             elif student_count < rec.room.number_of_beds:
+    #                 room.state = 'partial'
+    #             else:
+    #                 room.state = 'full'
+    #     return res
 
     @api.depends('invoice_count')
     def _compute_invoice_status(self):
+        '''To calculate invoice status for student room based on pending amount'''
         for rec in self:
             invoices = self.env['account.move'].search([
                 ('student_id', '=', rec.id),
@@ -222,9 +214,8 @@ class Student(models.Model):
                         rec.invoice_status = 'pending'
                         break
 
-
-
     def _create_user(self):
+        '''create user while creating a student'''
         for student in self:
             if not student.user_id:
                 user = self.env["res.users"].create({
@@ -236,5 +227,3 @@ class Student(models.Model):
                 })
                 print(user)
                 student.user_id = user.id
-
-

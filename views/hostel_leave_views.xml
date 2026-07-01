@@ -16,7 +16,7 @@
                         <field name="student_id"/>
                         <field name="leave_date"/>
                         <field name="arrival_date"/>
-                        <field name="status"/>
+<!--                        <field name="status"/>-->
                     </group>
                 </sheet>
             </form>

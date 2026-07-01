@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields
+from odoo import Command
 
 
 class Move(models.Model):
     _inherit = "account.move"
     student_id = fields.Many2one('student.details',
                                  string="Student")
+    room_id = fields.Many2one('hostel.room',string="Room",readonly=True)
 
     def action_post(self):
         res = super().action_post()
@@ -27,9 +29,9 @@ class Move(models.Model):
         return res
 
     def _send_monthly_invoice(self):
-        students=self.env['student.details'].search([
-            ('room_id','!=','False'),
-            ('email', '!=','False')
+        students = self.env['student.details'].search([
+            ('room_id', '!=', 'False'),
+            ('email', '!=', 'False')
         ])
 
         product = self.env.ref(
@@ -44,12 +46,18 @@ class Move(models.Model):
             invoice = self.env['account.move'].create({
                 'move_type': 'out_invoice',
                 'partner_id': student.partner_id.id,
-                'student_id': student.id,
-                'invoice_line_ids': [(0, 0, {
+                'student_id': student.room_id.id,
+                'room_id': student.id,
+                # 'invoice_line_ids': [(0, 0, {
+                #     'product_id': product.id,
+                #     'quantity': 1,
+                #     'price_unit': student.room_id.rent,
+                'invoice_line_ids': [Command.create({
                     'product_id': product.id,
                     'quantity': 1,
                     'price_unit': student.room_id.rent,
+
                 })],
             })
 
-            invoice.action_post()
+        invoice.action_post()

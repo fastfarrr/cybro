@@ -19,10 +19,10 @@
                     <field name="state" widget="statusbar"/>
                     <button type="object" string="Assign" name="assign_staff"
                             class="oe_highlight"
-                            invisible="state == 'assigned'"/>
+                            invisible="staff_id"/>
                     <button type="object" string="Complete"
                             name="completed_cleaning" class="oe_highlight"
-                            invisible="state == 'done'"/>
+                            invisible="state == 'new' or state == 'done'" />
 
                 </header>
 
@@ -31,7 +31,7 @@
 
                         <field name="room"/>
                         <field name="start_time"/>
-                        <field name="cleaning_staff_id"/>
+                        <field name="staff_id"/>
                         <field name="company_id"/>
                     </group>
                 </sheet>
@@ -46,7 +46,7 @@
             <list>
                 <field name="room" width="85px"/>
                 <field name="state" width="85px"/>
-                <field name="cleaning_staff_id" width="85px"/>
+                <field name="staff_id" width="85px"/>
             </list>
         </field>
     </record>

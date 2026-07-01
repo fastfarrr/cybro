@@ -10,7 +10,7 @@ class HostelFacilities(models.Model):
     _name = 'hostel.facilities'
     _description = 'Hostel.Facilities'
 
-    name = fields.Char(String="Facility Name",required=True)
+    name = fields.Char(String="Facility Name", required=True)
     charge = fields.Monetary(String="Facility Charge")
     company_id = fields.Many2one('res.company',
                                  string="company_id",

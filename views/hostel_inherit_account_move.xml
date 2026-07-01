@@ -8,6 +8,7 @@
         <xpath expr="//field[@name='partner_id']" position="after">
             <group>
             <field name="student_id"/>
+                <field name="room_id"/>
             </group>
         </xpath>
         </field>
