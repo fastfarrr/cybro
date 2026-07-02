@@ -10,10 +10,11 @@
     'sequence': 1,
     'application': True,
     'installable': True,
-    'auto_install':True,
-    'depends': ['mail', 'sale_management', 'account','hr','base_automation'],
+    'auto_install': True,
+    'depends': ['mail', 'sale_management', 'account', 'base_automation'],
     'data': [
         "security/ir.model.access.csv",
+        "security/company_record.xml",
         "data/user_cron_data.xml",
         "data/ir_cron_data.xml",
         "data/rental_product.xml",

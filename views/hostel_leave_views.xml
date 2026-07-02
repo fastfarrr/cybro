@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <record id="leave_request_search_view" model="ir.ui.view">
+        <field name="name">leave search view</field>
+        <field name="model">leave_request</field>
+        <field name="arch" type="xml">
+            <search string="leave request">
+                <field name="student_id"/>
+                <field name="leave_date"/>
+                <filter name="status" string="Approved"
+                        domain="[('status','in','approved')]"/>
+                <group>
+                    <filter name="student_id" string="student"
+                            context="{'group_by':'student_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="leave_request_form_view" model="ir.ui.view">
         <field name="name">Leave date</field>
         <field name="model">leave_request</field>
@@ -8,7 +25,7 @@
                 <header>
                     <field name="status" widget="statusbar"/>
                     <button type="object" string="Approve" class="oe_highlight"
-                                name="approve" invisible="status == 'approved'"/>
+                            name="approve" invisible="status == 'approved'"/>
                 </header>
                 <sheet>
                     <group>
@@ -16,7 +33,7 @@
                         <field name="student_id"/>
                         <field name="leave_date"/>
                         <field name="arrival_date"/>
-<!--                        <field name="status"/>-->
+                        <!--                        <field name="status"/>-->
                     </group>
                 </sheet>
             </form>
@@ -28,6 +45,7 @@
         <field name="model">leave_request</field>
         <field name="arch" type="xml">
             <list>
+                <field name="student_id"/>
                 <field name="leave_date" width="85px"/>
                 <field name="arrival_date" width="85px"/>
                 <field name="status" width="85px"/>

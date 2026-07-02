@@ -12,7 +12,9 @@ class Cleaning(models.Model):
     room = fields.Many2one('hostel.room')
     start_time = fields.Datetime(required=True)
     staff_id=fields.Many2one('res.users',readonly=True)
-    company_id = fields.Many2one('res.company')
+    company_id = fields.Many2one('res.company',
+                                 default=lambda self: self.env.company.id,
+                                 readonly=True)
     state = fields.Selection(selection=[('new', 'New'), ('assigned', 'Assigned'
                                                          ), ('done', 'Done'
                                                              )], default='new')
@@ -26,8 +28,12 @@ class Cleaning(models.Model):
                 raise UserError("Staff has already been assigned.")
 
             rec.staff_id = self.env.user
-            rec.company_id = self.env.user.company_id.id
             rec.state = 'assigned'
 
     def completed_cleaning(self):
-        self.state = 'done'
+        """to change the state to completed the cleaning"""
+        for rec in self:
+            rec.state = 'done'
+
+            if rec.state=='done':
+                rec.room.state='empty'

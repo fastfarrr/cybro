@@ -11,8 +11,13 @@
                 <field name="number_of_beds"/>
                 <field name="room_type"/>
                 <field name="state"/>
-                <filter name="rooms_available" string="Rooms available"
+                <filter name="rooms_available" string="Rooms Available"
                         domain="[('state', 'in' , ['empty','partial','cleaning'])]"/>
+                <separator/>
+                <filter name="room_type" string="Room Type Dorm"
+                        domain="[('room_type','=','dorm')]"/>
+                <filter name="room_type" string="Room Type Shared"
+                        domain="[('room_type','=','shared')]"/>
                 <group>
                     <filter string="Count of bed" name="count_of_beds"
                             context="{'group_by' : 'number_of_beds'}"/>

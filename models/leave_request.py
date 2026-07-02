@@ -16,8 +16,12 @@ class LeaveRequest(models.Model):
     status = fields.Selection(selection=[('new', "New"),
                                          ('approved', "Approved"), ],
                               default='new')
-    student_id = fields.Many2one('student.details', string="Student",
+    student_id = fields.Many2one('student.details',
+                                 string="Student",
                                  required=True,ondelete='cascade')
+    company_id = fields.Many2one('res.company', default = lambda
+            self: self.env.company.id)
+    #
 
     def approve(self):
         """when click the button it need to change the status to approved and
@@ -43,6 +47,7 @@ class LeaveRequest(models.Model):
 
     @api.constrains('arrival_date', 'leave_date')
     def _check_date(self):
+        """this wont allow to assign date lower than the leave request"""
         for record in self:
             if record.leave_date > record.arrival_date:
                 raise ValidationError(

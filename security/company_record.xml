@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="room_my_company_rule" model="ir.rule">
+            <field name="name">company rule for hostel room</field>
+            <field name="model_id" ref="model_hostel_room"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+
+        </record>
+
+
+        <record id="student_company_rule" model="ir.rule">
+            <field name="name">company rule for student details</field>
+            <field name="model_id" ref="model_student_details"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="cleaning_company_rule" model="ir.rule">
+            <field name="name">company rule for hostel cleaning</field>
+            <field name="model_id" ref="model_hostel_cleaning"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="facility_company_rule" model="ir.rule">
+            <field name="name">company rule for leave request</field>
+            <field name="model_id" ref="model_hostel_facilities"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="leave_company_rule" model="ir.rule">
+            <field name="name">company rule for leave request</field>
+            <field name="model_id" ref="model_leave_request"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="invoice_company_rule" model="ir.rule">
+            <field name="name">company rule for leave request</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+
+
+</odoo>

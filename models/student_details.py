@@ -27,7 +27,10 @@ class Student(models.Model):
     student_id = fields.Char(string="Sequence Name", readonly=True,
                              copy=False, default=lambda self: _("New"), )
     company_id = fields.Many2one("res.company",
-                                 string="Company", related="room_id.company_id")
+                                 string="Company",
+                                 default=lambda self:self.env.company.id,
+                                 readonly=True)
+    # related = "room_id.company_id",
 
     currency_id = fields.Many2one('res.currency', string="Currency",
                                   related='company_id.currency_id')
@@ -153,14 +156,6 @@ class Student(models.Model):
                             'company_id': room.company_id.id,
                             # 'staff_id': self.env.user.id
                         })
-                        a=self.env['hostel.cleaning'].search([
-                            ('state','=','done')
-                        ])
-                        if a:
-                            room.state='empty'
-                            print(room.state)
-
-
             else:
                 raise UserError(_("Not assigned any room"))
 

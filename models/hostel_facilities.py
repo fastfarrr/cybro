@@ -14,8 +14,7 @@ class HostelFacilities(models.Model):
     charge = fields.Monetary(String="Facility Charge")
     company_id = fields.Many2one('res.company',
                                  string="company_id",
-                                 default=lambda self: self.env.user.
-                                 company_id.id)
+                                 default=lambda self: self.env.company.id)
     currency_id = fields.Many2one(related='company_id.currency_id',
                                   string="Currency")
 

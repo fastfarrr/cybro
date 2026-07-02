@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <record id="hosetel_cleaning_search_view" model="ir.ui.view">
+        <field name="name">Hostel_cleaning_view</field>
+        <field name="model">hostel.cleaning</field>
+        <field name="arch" type="xml">
+            <search string="Cleaning search">
+                <field name="room"/>
+                <field name="staff_id"/>
+                <filter name="state" string="New"
+                        domain="[('state','in','new')]"/>
+                <filter name="state" string="Assigned"
+                        domain="[('state','in','assigned')]"/>
+                <filter name="state" string="Completed"
+                        domain="[('state','in','done')]"/>
+
+
+                <group>
+                    <filter name="staff_id" string="Staff"
+                            context="{'group_by':'staff_id'}"/>
+                </group>
+            </search>
+
+        </field>
+
+    </record>
     <record id="hostel_cleaning_action" model="ir.actions.act_window">
         <field name="name">Hostel cleaning</field>
         <field name="res_model">hostel.cleaning</field>
@@ -22,7 +46,7 @@
                             invisible="staff_id"/>
                     <button type="object" string="Complete"
                             name="completed_cleaning" class="oe_highlight"
-                            invisible="state == 'new' or state == 'done'" />
+                            invisible="state == 'new' or state == 'done'"/>
 
                 </header>
 

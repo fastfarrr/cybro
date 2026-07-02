@@ -23,7 +23,8 @@ class Room(models.Model):
                                  copy=False,
                                  string="Company",
                                  default=lambda
-                                     self: self.env.user.company_id.id)
+                                     self: self.env.company.id,
+                                 readonly=True)
     currency_id = fields.Many2one('res.currency', string="Currency",
                                   related='company_id.currency_id')
     rent = fields.Integer(string="Rent", required=True)

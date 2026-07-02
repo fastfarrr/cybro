@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
+    <record id="hostel_facility_search_view" model="ir.ui.view">
+        <field name="name">facility search view</field>
+        <field name="model">hostel.facilities</field>
+        <field name="arch" type="xml">
+            <search string="search facility">
+                <field name="name"/>
+                <field name="charge"/>
+                <filter name="charge" string="Charge"
+                        domain="[('charge','&gt;','25')]"/>
+                <group>
+                    <filter name="name" string="Name"
+                            context="{'group_by':'name'}"/>
+                </group>
+            </search>
+
+
+        </field>
+    </record>
 
     <record id="hostel_facility_form_view" model="ir.ui.view">
         <field name="name">hostel.facilities.form.view</field>

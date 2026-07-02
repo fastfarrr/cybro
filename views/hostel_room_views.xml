@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="student_details_search_view" model="ir.ui.view">
+        <field name="name">Search view</field>
+        <field name="model">student.details</field>
+        <field name="arch" type="xml">
+            <search string="search">
+                <field name="student_id"/>
+                <field name="user_id"/>
+                <field name="email"/>
+                <filter string="Archived" domain="[('active','=','False')]"
+                        name="Archive"/>
+                <separator/>
+                <filter name="room_id" string="ROOM001"
+                        domain="[('room_id','=','RM001')]"/>
+                <filter name="room_id" string="ROOM002"
+                        domain="[('room_id','=','RM002')]"/>
+                <group>
+                    <filter name="state_id" string="State"
+                           context="{'group_by':'state_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
     <record id="student_details_form_view" model="ir.ui.view">
         <field name="name">student_form_view</field>
         <field name="model">student.details</field>
@@ -48,7 +72,6 @@
                             <field name="invoice_status"/>
 
 
-
                         </group>
                         <group>
                             <field name="room_id"/>
@@ -90,18 +113,6 @@
     </record>
 
 
-    <record id="student_details_search_view" model="ir.ui.view">
-        <field name="name">Search view</field>
-        <field name="model">student.details</field>
-        <field name="arch" type="xml">
-        <search string="search">
-            <filter string="Archived" domain="[('active','=','False')]"
-                    name="Archive"/>
-        </search>
-        </field>
-    </record>
-
-
     <record id="student_details_list_view" model="ir.ui.view">
         <field name="name">Student_tree_view</field>
         <field name="model">student.details</field>
@@ -110,6 +121,7 @@
                 <field name="student_id"/>
                 <field name="student_name"/>
                 <field name="email"/>
+                <field name="state_id"/>
             </list>
         </field>
 
