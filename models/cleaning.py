@@ -9,6 +9,7 @@ class Cleaning(models.Model):
     _description = 'cleaning'
     _rec_name = 'room'
 
+    student_id=fields.Many2one("student.details")
     room = fields.Many2one('hostel.room')
     start_time = fields.Datetime(required=True)
     staff_id=fields.Many2one('res.users',readonly=True)

@@ -5,28 +5,30 @@ from datetime import date
 from odoo.tools import date_utils
 from odoo.exceptions import UserError
 
+
 class Move(models.Model):
     """to inherit the invoicing template"""
     _inherit = "account.move"
     student_id = fields.Many2one('student.details',
                                  string="Student")
-    room_id = fields.Many2one('hostel.room',string="Room",
+    room_id = fields.Many2one('hostel.room', string="Room",
                               readonly=True)
-    cron_generated=fields.Boolean(string="Cron",default=False)
+    cron_generated = fields.Boolean(string="Cron", default=False)
 
     def action_post(self):
         """to post the invoice manually"""
-        today=date.today()
+        today = date.today()
         # day=date.today()
         # month=day.strftime('%m')
-        get_month= date_utils.get_month(today)
+        start_date, end_date = date_utils.get_month(today)
 
         for invoice in self:
             existing = self.search([
                 ('student_id', '=', invoice.student_id.id),
                 ('cron_generated', '=', True),
                 ('state', '=', 'posted'),
-                ('invoice_date', '=', get_month),
+                ('invoice_date', '>=', start_date),
+                ('invoice_date', '<=', end_date),
                 ('id', '!=', invoice.id),
             ], limit=1)
             print(existing)
@@ -75,10 +77,6 @@ class Move(models.Model):
                 'student_id': student.id,
                 'room_id': student.room_id.id,
                 'cron_generated': True,
-                # 'invoice_line_ids': [(0, 0, {
-                #     'product_id': product.id,
-                #     'quantity': 1,
-                #     'price_unit': student.room_id.rent,
                 'invoice_line_ids': [Command.create({
                     'product_id': product.id,
                     'quantity': 1,
@@ -87,4 +85,4 @@ class Move(models.Model):
                 })],
             })
 
-        invoice.action_post()
+            invoice.action_post()

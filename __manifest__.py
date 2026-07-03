@@ -15,6 +15,7 @@
     'data': [
         "security/ir.model.access.csv",
         "security/company_record.xml",
+        "security/hostel_management_groups.xml",
         "data/user_cron_data.xml",
         "data/ir_cron_data.xml",
         "data/rental_product.xml",

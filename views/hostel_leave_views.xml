@@ -25,7 +25,8 @@
                 <header>
                     <field name="status" widget="statusbar"/>
                     <button type="object" string="Approve" class="oe_highlight"
-                            name="approve" invisible="status == 'approved'"/>
+                            name="approve" invisible="status == 'approved'"
+                            groups="hostel_management.group_warden_user"/>
                 </header>
                 <sheet>
                     <group>
