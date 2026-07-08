@@ -9,6 +9,6 @@
     'sequence':2,
     'installable':True,
     'depends':['base','sale'],
-    'data':["views/discount_limit.xml"]
+    'data':["views/res_config_settings.xml.xml"]
 
 }
