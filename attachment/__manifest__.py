@@ -1,6 +1,6 @@
 # # -*- coding: utf-8 -*-
 {
-    'name': 'Attachment',
+    'name': 'purchase order attachment',
     'version':'19.0.1.0',
     'author':'faris',
     'summary':'Checks is any file attatched on purchase order',
