@@ -9,10 +9,18 @@
                 <group>
 
                     <field name="is_vendor_product"/>
-
+                    
                 </group>
+                <field name="product_ids"/>
 
             </xpath>
+
+
+<!--            </xpath>-->
+<!--            <xpath expr="//notebook">-->
+<!--                <field name="product_id" domain="[('id','in',product_ids)]"/>-->
+
+<!--            </xpath>-->
         </field>
 
     </record>
