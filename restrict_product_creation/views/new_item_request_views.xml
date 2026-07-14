@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="new_item_request_form_view" model="ir.ui.view">
+        <field name="name">new_item_request.view.form</field>
+        <field name="model">new_item_request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button type="object" class="oe_highlight"
+                            string="Approve" name="approve" groups="restrict_product_creation.group_manager" invisible="state == 'approved'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="product_name"/>
+                        <field name="product_cost"/>
+                        <field name="product_sale_price"/>
+                        <field name="requested_by"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="new_item_request_list_view" model="ir.ui.view">
+        <field name="name">new_item_request.view.list</field>
+        <field name="model">new_item_request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="product_name"/>
+                <field name="product_cost"/>
+                <field name="product_sale_price"/>
+                <field name="requested_by"/>
+            </list>
+        </field>
+
+    </record>
+
+    <record id="new_item_request_action" model="ir.actions.act_window">
+        <field name="name">New Item Request</field>
+        <field name="res_model">new_item_request</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>Create your first record</p>
+        </field>
+
+    </record>
+
+
+</odoo>
