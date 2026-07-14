@@ -9,18 +9,18 @@
                 <group>
 
                     <field name="is_vendor_product"/>
-                    
+
                 </group>
-                <field name="product_ids"/>
 
             </xpath>
+            <xpath expr="//field[@name='order_line']//field[@name='product_id']" position="attributes">
 
 
-<!--            </xpath>-->
-<!--            <xpath expr="//notebook">-->
-<!--                <field name="product_id" domain="[('id','in',product_ids)]"/>-->
+                <attribute name="domain">
+                    [('id', 'in', parent.product_ids)]
+                </attribute>
 
-<!--            </xpath>-->
+            </xpath>
         </field>
 
     </record>

@@ -9,7 +9,7 @@
     "installable": True,
     "sequence": 4,
     "application": True,
-    "depends": ['purchase'],
+    "depends": ['base','purchase'],
     "data": {
         "views/vendor_product_list_vendor_list.xml"
 
