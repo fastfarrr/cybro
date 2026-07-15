@@ -1,5 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-restrict_product_creation.access_new_item_request,access_new_item_request,restrict_product_creation.model_new_item_request,base.group_user,1,1,1,1
 restrict_product_creation_manager.access_new_item_request,access_new_item_request,restrict_product_creation.model_new_item_request,group_manager,1,1,1,1
 restrict_product_creation_user.access_new_item_request,access_new_item_request,restrict_product_creation.model_new_item_request,group_user,1,1,1,0
-access_product_template_user,product.template.user,sale.model_product_template,group_user,0,0,0,0
+access_product_template_user,product.template.user,sale.model_product_template,group_user,1,0,0,0

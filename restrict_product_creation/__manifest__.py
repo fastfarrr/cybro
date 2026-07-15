@@ -9,7 +9,7 @@
     "installable":True,
     "application":True,
     "sequence":4,
-    "depends":['base','sale_management'],
+    "depends":['base','product','sale_management'],
     "data":[
         "security/product_template_groups.xml",
         "security/ir.model.access.csv",

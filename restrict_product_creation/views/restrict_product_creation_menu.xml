@@ -2,4 +2,6 @@
 <odoo>
     <menuitem id="new_item_request" name="New Item Request"
               parent="sale.sale_menu_root" action="new_item_request_action"/>
+
+
 </odoo>

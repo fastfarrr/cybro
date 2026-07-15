@@ -8,17 +8,44 @@
                 <header>
                     <field name="state" widget="statusbar"/>
                     <button type="object" class="oe_highlight"
-                            string="Approve" name="approve" groups="restrict_product_creation.group_manager" invisible="state == 'approved'"/>
+                            string="To Approve" name="to_approve"
+                            invisible="state != 'draft'"/>
+                    <button type="object" class="oe_highlight"
+                            string="Approve" name="approve"
+                            groups="restrict_product_creation.group_manager"
+                            invisible="state != 'waiting'"/>
+                    <button type="object" class="oe_highlight" string="Reject"
+                            name="to_reject"
+                            invisible="state != 'waiting'"
+                            groups="restrict_product_creation.group_manager"/>
+
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" title="Draft"
+                            bg_color="text-bg-info"
+                            invisible="state != 'draft'"/>
+                    <widget name="web_ribbon" title="Waiting"
+                            bg_color="text-bg-warning"
+                            invisible="state != 'waiting'"/>
+                    <widget name="web_ribbon" title="Approved"
+                            bg_color="text-bg-success"
+                            invisible="state != 'approved'"/>
+                    <widget name="web_ribbon" title="Rejected"
+                            bg_color="text-bg-danger"
+                            invisible="state != 'rejected'"/>
                     <group>
                         <field name="currency_id" invisible="1"/>
-                        <field name="product_name"/>
-                        <field name="product_cost"/>
-                        <field name="product_sale_price"/>
+                        <field name="product_name" readonly="state != 'draft'"
+                               style="width:50%"/>
+                        <field name="product_cost" readonly="state != 'draft'"
+                               style="width:50%"/>
+                        <field name="product_sale_price"
+                               readonly="state != 'draft'" style="width:50%"/>
                         <field name="requested_by"/>
+                        <field name="attribute" readonly="state != 'draft'" />
                     </group>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
@@ -27,11 +54,15 @@
         <field name="name">new_item_request.view.list</field>
         <field name="model">new_item_request</field>
         <field name="arch" type="xml">
-            <list>
-                <field name="product_name"/>
-                <field name="product_cost"/>
-                <field name="product_sale_price"/>
-                <field name="requested_by"/>
+            <list decoration-success="state == 'approved'"
+                  decoration-warning="state == 'waiting'"
+                  decoration-info="state == 'draft'"
+                  decoration-danger="state == 'rejected'">
+                <field name="product_name" width="20px"/>
+                <field name="product_cost" width="10px"/>
+                <field name="product_sale_price" width="10px"/>
+                <field name="requested_by" width="20px"/>
+                <field name="state" width="20px"/>
             </list>
         </field>
 
