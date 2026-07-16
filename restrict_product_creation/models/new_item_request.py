@@ -30,26 +30,27 @@ class NewItemRequest(models.Model):
                               ('waiting', 'Waiting'),
                               ('approved', 'Approved'),('rejected', 'Rejected')
                               ], default='draft',tracking=True)
-    attribute = fields.Many2many(comodel_name='product.template.attribute.line')
+
+    value_ids = fields.One2many(comodel_name='product.template.attribute.variant',inverse_name='variant_id')
 
     def approve(self):
         '''while clicking approval need to change state and
         create a record in products'''
         self.write({'state': 'approved'})
         for order in self:
-            product=self.env['product.product'].create({
+            product=self.env['product.template'].create({
                 'sale_ok': True,
                 'name': order.product_name,
                 'standard_price': order.product_cost,
-                'lst_price': order.product_sale_price,
+                'list_price': order.product_sale_price,
             }
             )
-            self.env['product.template.attribute.line'].create({
-            'product_tmpl_id': product.id,
-            'attribute_id': order.attribute.id,
-            'value_ids': [Command.set([order.values.ids])],
-
-            })
+            for line in order.value_ids:
+                self.env['product.template.attribute.line'].create({
+                'product_tmpl_id':product.id,
+                'attribute_id': line.attribute_id.id,
+                'value_ids': [Command.set(line.value_ids.ids)],
+                })
 
     def to_approve(self):
         '''While clicking to approve button it should change

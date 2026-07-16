@@ -42,13 +42,23 @@
                         <field name="product_sale_price"
                                readonly="state != 'draft'" style="width:50%"/>
                         <field name="requested_by"/>
-                        <field name="attribute" readonly="state != 'draft'" />
                     </group>
+                    <notebook>
+                        <page string="Attributes and Variants">
+                            <field name="value_ids">
+                                <list editable="bottom">
+                                    <field name="attribute_id"/>
+                                    <field name="value_ids" widget="many2many_tags"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
                 <chatter/>
             </form>
         </field>
     </record>
+
 
     <record id="new_item_request_list_view" model="ir.ui.view">
         <field name="name">new_item_request.view.list</field>
