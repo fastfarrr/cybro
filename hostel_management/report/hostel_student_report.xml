@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="Utf-8" ?>
+<odoo>
+
+    <record id="action_student_report" model="ir.actions.report">
+        <field name="name">Report PDF Button</field>
+        <field name="model">student.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel_management.student_report</field>
+        <field name="report_file">hostel_management.student_report</field>
+        <field name="print_report_name">'Student report - %s' % (object.student_id)</field>
+        <field name="binding_model_id" ref="hostel_management.model_student_report"/>
+        <field name="binding_type">action</field>
+    </record>
+
+<!--    <record id="student_report_wizard_view" model="ir.ui.view">-->
+<!--        <field name="name">Report Wizard</field>-->
+<!--        <field name="model">student.report.wizard</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form>-->
+<!--                <sheet>-->
+<!--                    <group>-->
+<!--                        <field name="room_id"/>-->
+<!--                        <field name="student_id"/>-->
+<!--                    </group>-->
+
+<!--                </sheet>-->
+<!--                <footer>-->
+<!--                    <button class="btn-primary"-->
+<!--                            name="generate_pdf"-->
+<!--                            string="Generate PDF"-->
+<!--                            type="object"-->
+<!--                            icon="fa-print"-->
+<!--                    />-->
+<!--                </footer>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+
+</odoo>

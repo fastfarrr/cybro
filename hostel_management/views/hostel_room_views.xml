@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="student_details_search_view" model="ir.ui.view">
+        <field name="name">Search view</field>
+        <field name="model">student.details</field>
+        <field name="arch" type="xml">
+            <search string="search">
+                <field name="student_id"/>
+                <field name="user_id"/>
+                <field name="email"/>
+                <filter string="Archived" domain="[('active','=','False')]"
+                        name="Archive"/>
+                <separator/>
+                <filter name="room_id" string="ROOM001"
+                        domain="[('room_id','=','RM001')]"/>
+                <filter name="room_id" string="ROOM002"
+                        domain="[('room_id','=','RM002')]"/>
+                <group>
+                    <filter name="state_id" string="State"
+                           context="{'group_by':'state_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="student_details_form_view" model="ir.ui.view">
+        <field name="name">student_form_view</field>
+        <field name="model">student.details</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil">
+                            <field name="invoice_count" widget="statinfo"
+                                   string="Invoices"/>
+                        </button>
+                    </div>
+                    <header>
+                        <button type="object" string="Alot" class="oe_highlight"
+                                name="change_state"
+                                invisible="room_id"/>
+                        <button type="object" string="Vacate"
+                                class="oe_highlight"
+                                name="vacate_student"
+                                invisible="not room_id"
+                        />
+
+                    </header>
+
+                    <h1>
+                        <field name="student_id"/>
+                    </h1>
+                    <div>
+
+                        <field name="image" widget="image"
+                               class="oe_left" nolabel="1"
+                               style="max-width:80px; max-height:80px"/>
+                    </div>
+
+                    <group>
+                        <group>
+
+                            <field name="student_name"/>
+                            <field name="dob"/>
+                            <field name="student_age"/>
+                            <field name="is_email_from"/>
+                            <field name="user_id"/>
+                            <field name="invoice_status"/>
+
+
+                        </group>
+                        <group>
+                            <field name="room_id"/>
+                            <field name="email"/>
+                            <field name="company_id"/>
+                            <field name="partner_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="monthly_amount" widget="monetary"/>
+                        </group>
+                        <group>
+
+                        </group>
+
+                    </group>
+                    <group>
+                        <notebook>
+
+                            <page string="Contact address"
+                                  name="contact_address">
+                                <group>
+                                    <field name="street" placeholder="street"/>
+                                    <field name="state_id" placeholder="state"
+                                           domain="[('country_id', '=', country_id)]"/>
+                                    <field name="country_id"
+                                           placeholder="country"/>
+                                    <field name="zip_code"
+                                           placeholder="zipcode"/>
+                                </group>
+                            </page>
+
+
+                        </notebook>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+
+    </record>
+
+
+    <record id="student_details_list_view" model="ir.ui.view">
+        <field name="name">Student_tree_view</field>
+        <field name="model">student.details</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="student_id"/>
+                <field name="student_name"/>
+                <field name="email"/>
+                <field name="state_id"/>
+            </list>
+        </field>
+
+    </record>
+
+    <record id="student_details_action" model="ir.actions.act_window">
+        <field name="name">Students Details</field>
+        <field name="res_model">student.details</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="help" type="html">
+            <p>create your first data</p>
+        </field>
+    </record>
+</odoo>

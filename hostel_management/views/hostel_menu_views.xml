@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--main menu-->
+    <menuitem id="menu_hostel_erp_root" name="Hostel Erp"/>
+<!--    sub menu-->
+    <menuitem id="menu_hostel_erp_form" name="Hostel"
+              parent="menu_hostel_erp_root" />
+
+    <menuitem id="menu_hostel_erp_act" name="Hostel Room"
+              parent="menu_hostel_erp_form" action="hostel_room_action" groups="hostel_management.group_student_user,hostel_management.group_warden_user,hostel_management.group_staff_user"/>
+
+
+    <menuitem id="menu_student_erp" name="Students Details"
+              parent="menu_hostel_erp_root" action="student_details_action" groups="hostel_management.group_student_user,hostel_management.group_warden_user"/>
+
+    <menuitem id="menu_hostel_facilities" name="Hostel Facilities"
+              parent="menu_hostel_erp_form" action="hostel_facilities_action" groups="hostel_management.group_warden_user"/>
+
+
+    <menuitem id="menu_leave_request" name="Leave Request"
+              parent="menu_hostel_erp_root" action="leave_request_action"/>
+    <menuitem id="menu_hostel_cleaning" name="Hostel Cleaning"
+              parent="menu_hostel_erp_root" action="hostel_cleaning_action"/>
+    <!--    Report submenu -->
+    <menuitem id="menu_hostel_report" name="Reporting"
+              parent="menu_hostel_erp_root"/>
+
+    <menuitem id="menu_hostel_student_report" name="Student Report"
+              parent="menu_hostel_report" action="hostel_student_report"/>
+
+
+</odoo> 

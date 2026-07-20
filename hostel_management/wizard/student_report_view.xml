@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="student_report_wizard_view" model="ir.ui.view">
+        <field name="name">Report Wizard</field>
+        <field name="model">student.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="room_id"/>
+                        <field name="student_id"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button class="btn-primary"
+                            name="generate_pdf"
+                            string="Generate PDF"
+                            type="object"
+                            icon="fa-print"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="hostel_student_report" model="ir.actions.act_window">
+        <field name="name">Student Report</field>
+        <field name="res_model">student.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="help" type="html">
+            <p>create your first record</p>
+        </field>
+    </record>
+</odoo>
