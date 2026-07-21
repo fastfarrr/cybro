@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="leave_request_report" model="ir.actions.report">
+        <field name="name">Report Pdf</field>
+        <field name="model">leave.request.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hostel_management.leave_report</field>
+        <field name="report_file">hostel_management.leave_report</field>
+        <field name="print_report_name">'Leave report - %s' % (object.student_id.student_name)</field>
+        <field name="binding_type">action</field>
+
+    </record>
+</odoo>

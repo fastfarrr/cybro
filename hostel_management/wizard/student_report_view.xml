@@ -7,8 +7,8 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="room_id"/>
-                        <field name="student_id"/>
+                        <field name="room_id" widget="many2many_tags"/>
+                        <field name="student_id" widget="many2many_tags"/>
                     </group>
                 </sheet>
                 <footer>
@@ -28,8 +28,5 @@
         <field name="res_model">student.report.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
-        <field name="help" type="html">
-            <p>create your first record</p>
-        </field>
     </record>
 </odoo>

@@ -47,7 +47,7 @@ class Student(models.Model):
                                      related="room_id.total_rent")
     invoice_status = fields.Selection(selection=[('pending', "Pending"),
                                                  ('done', "Done"'')],
-                                      compute='_compute_invoice_status',store=True)
+                                      compute='_compute_invoice_status')
     user_id = fields.Many2one('res.users',readonly=True)
 
     @api.model_create_multi
@@ -173,7 +173,7 @@ class Student(models.Model):
                 ('state', '=', 'posted')
             ])
 
-            rec.invoice_status = 'done'  # default value
+            rec.invoice_status = 'done'
 
             if not invoices:
                 rec.invoice_status = 'pending'

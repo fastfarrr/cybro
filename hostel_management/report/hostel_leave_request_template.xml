@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="leave_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Leave report</h2>
+                    </div>
+                    <table class = "table">
+                        <thead>
+                            <tr>
+                                <th>SL.No</th>
+                                <th>Student</th>
+                                <th>Room</th>
+                                <th>Start Date</th>
+                                <th>Arrival Date</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td><span t-esc = "o.leave_request_id.id"/></td>
+                            <td><span t-esc = "o.student_id.student_name"/></td>
+                            <td><span t-esc = "o.room_id.room_number"/></td>
+                            <td><span t-esc = "o.leave_request_id.leave_date"/></td>
+                            <td><span t-esc = "o.leave_request_id.arrival_date"/></td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

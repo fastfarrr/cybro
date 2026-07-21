@@ -28,5 +28,8 @@
     <menuitem id="menu_hostel_student_report" name="Student Report"
               parent="menu_hostel_report" action="hostel_student_report"/>
 
+    <menuitem id="menu_hostel_leave_request_report" name="Leave Request Report"
+              parent="menu_hostel_report" action="student_leave_request_action"/>
+
 
 </odoo> 
