@@ -6,8 +6,8 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">hostel_management.leave_report</field>
         <field name="report_file">hostel_management.leave_report</field>
-        <field name="print_report_name">'Leave report - %s' % (object.student_id.student_name)</field>
-        <field name="binding_type">action</field>
+        <field name="print_report_name">'Leave report'</field>
+<!--        <field name="binding_type">action</field>-->
 
     </record>
 </odoo>

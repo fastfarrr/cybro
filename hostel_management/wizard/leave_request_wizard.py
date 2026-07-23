@@ -7,19 +7,18 @@ class LeaveRequestWizard(models.TransientModel):
     as  transient model"""
     _name = 'leave.request.report.wizard'
 
-    room_id = fields.Many2many(comodel_name='hostel.room')
+    room_id = fields.Many2one(comodel_name='hostel.room')
     student_id = fields.Many2many(comodel_name='student.details',
                                  domain="[('room_id','=',room_id)]")
     leave_request_id = fields.Many2one(comodel_name='leave_request')
     start_date = fields.Date(related='leave_request_id.leave_date',readonly=False)
     arrival_date = fields.Date(related = 'leave_request_id.arrival_date',readonly=False)
 
-    # duration = fields.Integer(string="Duration",compute="compute_duration")
 
     def generate_report_pdf(self):
         """While clicking button need to generate PDF report"""
         self.ensure_one()
-        return self.env.ref('hostel_management.leave_request_report').report_action(self)
+        return self.leave_request_report()
 
     def leave_request_report(self):
         query = """ select hr.room_number,st.student_name,
@@ -30,10 +29,10 @@ class LeaveRequestWizard(models.TransientModel):
         self.env.cr.execute(query)
         report = self.env.cr.dictfetchall()
         data = {'report':report}
+        print(data)
         return self.env.ref('hostel_management.leave_request_report'
                             ).report_action(None,data=data)
 
-    # def compute_duration(self):
 
 
 

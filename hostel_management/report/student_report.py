@@ -8,15 +8,14 @@ class StudentReport(models.AbstractModel):
 
 
     @api.model
-    def _get_report_values(self, docids,data=None):
-        docs = self.env['student.report.wizard'].browse(docids)
+    def _get_report_values(self,
+                           docids,
+                           data=None):
         return{
             'doc_ids': docids,
             'doc_model' : 'student.report.wizard',
-            'data': data,
-            'docs': docs,
+            'data': data['report'],
         }
-
 
 
 

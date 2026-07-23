@@ -1,32 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version = "1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="leave_report">
         <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="o">
-                <t t-call="web.external_layout">
-                    <div class="page">
-                        <h2>Leave report</h2>
-                    </div>
-                    <table class = "table">
-                        <thead>
-                            <tr>
-                                <th>SL.No</th>
-                                <th>Student</th>
-                                <th>Room</th>
-                                <th>Start Date</th>
-                                <th>Arrival Date</th>
-                                <th>Duration</th>
-                            </tr>
-                        </thead>
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Student Report</h2>
+                </div>
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td><span t-esc = "o.leave_request_id.id"/></td>
-                            <td><span t-esc = "o.student_id.student_name"/></td>
-                            <td><span t-esc = "o.room_id.room_number"/></td>
-                            <td><span t-esc = "o.leave_request_id.leave_date"/></td>
-                            <td><span t-esc = "o.leave_request_id.arrival_date"/></td>
+                            <th>SL No</th>
+                            <th>Student</th>
+                            <th>Room</th>
+                            <th>Start Date</th>
+                            <th>Arrival Date</th>
+                            <th>Duration</th>
                         </tr>
-                    </table>
-                </t>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="data" t-as="leave">
+                            <tr>
+                                <td><span t-esc="leave_index"/> </td>
+                                <td><span t-esc="leave['student_name']"/></td>
+                                <td><span t-esc="leave['room_number']"/></td>
+                                <td><span t-esc="leave['leave_date']"/></td>
+                                <td><span t-esc="leave['arrival_date']"/> </td>
+
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
             </t>
         </t>
     </template>

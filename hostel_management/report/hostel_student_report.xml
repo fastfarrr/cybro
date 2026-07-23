@@ -7,8 +7,9 @@
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">hostel_management.student_report</field>
         <field name="report_file">hostel_management.student_report</field>
-        <field name="print_report_name">'Student report - %s' % (object.student_id)</field>
-        <field name="binding_type">action</field>
+        <field name="print_report_name">'Student report'</field>
+<!--        <field name="binding_model_id" ref="hostel_management.model_student_report_wizard"/>-->
+<!--        <field name="binding_type">action</field>-->
     </record>
 </odoo>
 

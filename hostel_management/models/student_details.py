@@ -162,8 +162,6 @@ class Student(models.Model):
         self.active = False
 
 
-
-    @api.depends('invoice_count')
     def _compute_invoice_status(self):
         '''To calculate invoice status for student room based on pending amount'''
         for rec in self:
