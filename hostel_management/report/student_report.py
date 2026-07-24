@@ -8,13 +8,13 @@ class StudentReport(models.AbstractModel):
 
 
     @api.model
-    def _get_report_values(self,
-                           docids,
-                           data=None):
+    def _get_report_values(self,docids,data=None):
         return{
             'doc_ids': docids,
             'doc_model' : 'student.report.wizard',
             'data': data['report'],
+            'room_number':data['room_number'],
+            'student_name':data['student_name']
         }
 
 

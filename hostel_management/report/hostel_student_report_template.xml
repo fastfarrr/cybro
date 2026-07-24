@@ -6,10 +6,15 @@
                 <div class="page">
                     <h2>Student Report</h2>
                 </div>
-<!--                <div>-->
-<!--                    <h2><span t-esc="data[student_name]"/></h2>-->
+                <div>
+                        <t t-if="room_number">Rooms:<t t-foreach="data" t-as="room">,<span t-esc="room['room_number']"/></t></t>
+                        <t t-else="room_number['False']">Rooms:<t t-foreach="data" t-as="new">,<span t-esc="new['room_number']"/></t></t>
+                </div>
+                <div>
+                    <t t-if="student_name">Student:<t t-foreach="data" t-as="student">,<span t-esc="student['student_name']"/></t></t>
+                    <t t-else="student_name['False']">Students:<t t-foreach="data" t-as="new">,<span t-esc="new['student_name']"/></t></t>
+                </div>
 
-<!--                </div>-->
                 <table class="table">
                     <thead>
                         <tr>
@@ -23,11 +28,21 @@
                     <tbody>
                         <t t-foreach="data" t-as="student">
                             <tr>
-                                <td><span t-esc="student_index"/></td>
-                                <td><span t-esc="student['student_name']"/></td>
-                                <td><span t-esc="student['pending_amount']"/></td>
-                                <td><span t-esc="student['room_number']"/></td>
-                                <td><span t-esc="student['invoice_status']"/> </td>
+                                <td>
+                                    <span t-esc="student_index"/>
+                                </td>
+                                <td>
+                                    <span t-esc="student['student_name']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="student['pending_amount']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="student['room_number']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="student['invoice_status']"/>
+                                </td>
 
                             </tr>
                         </t>
