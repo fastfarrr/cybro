@@ -7,8 +7,8 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="room_id" widget="many2many_tags"/>
-                        <field name="student_id" widget="many2many_tags"/>
+                        <field name="room_ids" widget="many2many_tags"/>
+                        <field name="student_ids" widget="many2many_tags"/>
                     </group>
                 </sheet>
                 <footer>

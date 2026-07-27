@@ -7,12 +7,32 @@
                     <h2>Student Report</h2>
                 </div>
                 <div>
-                        <t t-if="room_number">Rooms:<t t-foreach="data" t-as="room">,<span t-esc="room['room_number']"/></t></t>
-                        <t t-else="room_number['False']">Rooms:<t t-foreach="data" t-as="new">,<span t-esc="new['room_number']"/></t></t>
+                    <t t-if="room_number">Rooms:
+                        <t t-foreach="data" t-as="room">
+                            <t t-if="not room_first">,</t>
+                            <span t-esc="room['room_number']"/>
+                        </t>
+                    </t>
+                    <t t-else="room_number['False']">Rooms:
+                        <t t-foreach="data" t-as="new">
+<!--                            <t t-if="not new_first">,</t>-->
+                            <span t-esc="room_number"/>
+                        </t>
+                    </t>
                 </div>
                 <div>
-                    <t t-if="student_name">Student:<t t-foreach="data" t-as="student">,<span t-esc="student['student_name']"/></t></t>
-                    <t t-else="student_name['False']">Students:<t t-foreach="data" t-as="new">,<span t-esc="new['student_name']"/></t></t>
+                    <t t-if="student_name">Students:
+                        <t t-foreach="data" t-as="student">
+                            <t t-if="not student_first">,</t>
+                            <span t-esc="student['student_name']"/>
+                        </t>
+                    </t>
+                    <t t-else="student_name['False']">Students:
+                        <t t-foreach="data" t-as="new">
+<!--                            <t t-if="not new_first">,</t>-->
+                            <span t-esc="student_name"/>
+                        </t>
+                    </t>
                 </div>
 
                 <table class="table">
@@ -29,7 +49,7 @@
                         <t t-foreach="data" t-as="student">
                             <tr>
                                 <td>
-                                    <span t-esc="student_index"/>
+                                    <span t-esc="student_index +1"/>
                                 </td>
                                 <td>
                                     <span t-esc="student['student_name']"/>

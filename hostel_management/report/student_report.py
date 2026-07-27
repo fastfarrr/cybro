@@ -9,6 +9,9 @@ class StudentReport(models.AbstractModel):
 
     @api.model
     def _get_report_values(self,docids,data=None):
+        """This is  standard method to call the datas from the transient
+                model and return the values into dictionary"""
+        print("coming from wizard",data)
         return{
             'doc_ids': docids,
             'doc_model' : 'student.report.wizard',

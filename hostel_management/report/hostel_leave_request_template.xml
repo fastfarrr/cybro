@@ -7,27 +7,65 @@
                     <h2>Leave Report</h2>
                 </div>
                 <div>
-                    <t t-if="student_name">Student:<t t-foreach="data" t-as="student">,<span t-esc="student['student_name']"/></t></t>
-                    <t t-else="student_name['False']">Students:<t  t-foreach="data" t-as="new">,<span t-esc="new['student_name']"/></t></t>
+                    <t t-if="student_name">Student:
+                        <t t-foreach="data" t-as="student">
+                            <t t-if="not student_first">,</t>
+                            <span t-esc="student['student_name']"/>
+                        </t>
+                    </t>
+                    <t t-else="student_name['False']">Students:
+                        <t t-foreach="data" t-as="new">
+<!--                            <t t-if="not new_first">,</t>-->
+                            <span t-esc="student_name"/>
+                        </t>
+                    </t>
 
                 </div>
 
                 <div>
-                    <t t-if="room_number">Rooms:<t t-foreach="data" t-as="room">,<span t-esc="room['room_number']"/></t></t>
-                    <t t-else="room_number['False']">Students:<t  t-foreach="data" t-as="new">,<span t-esc="new['room_number']"/></t></t>
+                    <t t-if="room_number">Rooms:
+                        <t t-foreach="data" t-as="room">
+                            <t t-if="not room_first">,</t>
+                            <span t-esc="room['room_number']"/>
+                        </t>
+                    </t>
+                    <t t-else="room_number['False']">Rooms:
+                        <t t-foreach="data" t-as="new">
+<!--                            <t t-if="not new_first">,</t>-->
+                            <span t-esc="room_number"/>
+                        </t>
+                    </t>
                 </div>
 
                 <div>
-                    <t t-if="start_date">Start Date:<t t-foreach="data" t-as="start">,<span t-esc="start['start_date']"/></t></t>
-                    <t t-else="start_date['False']">Start Date:<t t-foreach="data" t-as="new">,<span t-esc="new['start_date']"/></t></t>
+                    <t t-if="start_date">Start Date:
+                        <t t-foreach="data" t-as="start">
+                            <t t-if="not start_first">,</t>
+                            <span t-esc="start['leave_date']"/>
+                        </t>
+                    </t>
+                    <t t-else="start_date['False']">Start Date:
+                        <t t-foreach="data" t-as="new">
+<!--                            <t t-if="not new_first">,</t>-->
+                            <span t-esc="leave_date"/>
+                        </t>
+                    </t>
                 </div>
 
                 <div>
                     <t t-if="arrival_date">Arrival Date:
-                        <t t-foreach="data" t-as="arrival">,<span t-esc="arrival['arrival_date']"/></t>
+                        <t t-foreach="data" t-as="arrival">
+                            <t t-if="not arrival_first">,</t>
+                            <span t-esc="arrival['arrival_date']"/>
+                        </t>
                     </t>
 
-                    <t t-else="arrival_Date['False']">Arrival Date:<t t-foreach="data" t-as="new">,<span t-esc="new['arrival_date']"/></t></t>
+                    <t t-else="arrival_Date['False']">Arrival Date:
+                        <t t-foreach="data" t-as="new">
+<!--                            <t t-if="not new_first">,</t>-->
+                            <span t-esc="leave_date"/>
+                        </t>
+                    </t>
                 </div>
                 <table class="table">
                     <thead>
@@ -43,12 +81,24 @@
                     <tbody>
                         <t t-foreach="data" t-as="leave">
                             <tr>
-                                <td><span t-esc="leave_index +1"/> </td>
-                                <td><span t-esc="leave['student_name']"/></td>
-                                <td><span t-esc="leave['room_number']"/></td>
-                                <td><span t-esc="leave['start_date']"/></td>
-                                <td><span t-esc="leave['arrival_date']"/> </td>
-                                <td><span t-esc="leave['duration']"/> </td>
+                                <td>
+                                    <span t-esc="leave_index +1"/>
+                                </td>
+                                <td>
+                                    <span t-esc="leave['student_name']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="leave['room_number']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="leave['leave_date']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="leave['arrival_date']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="leave['duration']"/>
+                                </td>
 
                             </tr>
                         </t>
