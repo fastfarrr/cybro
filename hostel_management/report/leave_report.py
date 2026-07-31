@@ -8,15 +8,17 @@ class LeaveRequestReport(models.AbstractModel):
     def _get_report_values(self,docids,data=None):
         """This is  standard method to call the datas from the transient
         model and return the values into dictionary"""
-        print("this is the data is passing from the abstract model",data)
+        room = self.env['hostel.room'].browse(data['room_number'])
+        student = self.env['student.details'].browse(data['student_name'])
+
 
 
         return{
             'doc_ids' : docids,
             'doc_model' : 'leave.request.report.wizard',
             'data' : data['report'],
-            'room_number' : data['room_number'],
-            'student_name' : data['student_name'],
+            'room_number' : room,
+            'student_name' : student,
             'start_date' : data['start_date'],
             'arrival_date' : data['arrival_date'],
         }

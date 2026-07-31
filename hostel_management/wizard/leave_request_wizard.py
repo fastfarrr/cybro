@@ -12,10 +12,10 @@ class LeaveRequestWizard(models.TransientModel):
                                   domain="[('room_id','=',room_ids)]")
     start_date = fields.Date(string='Start Date')
     arrival_date = fields.Date(string='Arrival Date')
-    student_name = fields.Char(related='student_ids.student_name',
-                               string='Student Name')
-    room_number = fields.Char(related='room_ids.room_number',
-                              string='Room Number')
+    # student_name = fields.Char(related='student_ids.student_name',
+    #                            string='Student Name')
+    # room_number = fields.Char(related='room_ids.room_number',
+    #                           string='Room Number')
 
     def generate_report_pdf(self):
         """While clicking button need to generate PDF report"""
@@ -37,25 +37,29 @@ class LeaveRequestWizard(models.TransientModel):
         if self.room_ids:
             query += """ and hr.id in %s """
             params.append(tuple(self.room_ids.ids))
-            print("this param when u select room",params)
 
         if self.student_ids:
             query += """ and st.id in %s """
             params.append(tuple(self.student_ids.ids))
-            print("this param when u select student",params)
-        #
-        # if self.start_date and self.arrival_date:
-        #     query += """ and lr.leave_date between %s and %s """
-        #     params.append(self.start_date)
+
+        if self.start_date :
+            query += """ and lr.leave_date >= %s """
+            params.append(self.start_date)
+
+        if self.arrival_date :
+            query += """ and lr.arrival_date <= %s """
+            params.append(self.arrival_date)
 
 
         self.env.cr.execute(query,params)
         report = self.env.cr.dictfetchall()
-        data = {'student_name': self.student_name,
-                'room_number': self.room_number,
+        data = {'student_name': self.student_ids.ids,
+                'room_number': self.room_ids.ids,
                 'start_date': self.start_date,
                 'arrival_date': self.arrival_date,
                 'report': report}
         print("This is the data passing from transient model",data)
         return self.env.ref('hostel_management.action_leave_report'
                             ).report_action(None, data=data)
+
+    # def generate_excel_report(self):

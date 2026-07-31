@@ -8,31 +8,21 @@
                 </div>
                 <div>
                     <t t-if="room_number">Rooms:
-                        <t t-foreach="data" t-as="room">
+                        <t t-foreach="room_number" t-as="room">
                             <t t-if="not room_first">,</t>
-                            <span t-esc="room['room_number']"/>
-                        </t>
-                    </t>
-                    <t t-else="room_number['False']">Rooms:
-                        <t t-foreach="data" t-as="new">
-<!--                            <t t-if="not new_first">,</t>-->
-                            <span t-esc="room_number"/>
+                            <span t-esc="room.room_number"/>
                         </t>
                     </t>
                 </div>
+
                 <div>
                     <t t-if="student_name">Students:
-                        <t t-foreach="data" t-as="student">
+                        <t t-foreach="student_name" t-as="student">
                             <t t-if="not student_first">,</t>
-                            <span t-esc="student['student_name']"/>
+                            <span t-esc="student.student_name"/>
                         </t>
                     </t>
-                    <t t-else="student_name['False']">Students:
-                        <t t-foreach="data" t-as="new">
-<!--                            <t t-if="not new_first">,</t>-->
-                            <span t-esc="student_name"/>
-                        </t>
-                    </t>
+
                 </div>
 
                 <table class="table">

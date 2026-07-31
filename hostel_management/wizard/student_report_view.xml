@@ -18,6 +18,12 @@
                             type="object"
                             icon="fa-print"
                     />
+                    <button class = "btn-primary"
+                            name="generate_excel"
+                            string="Generate excel"
+                            type="object"
+                            icon="fa-print"
+                            />
                 </footer>
             </form>
         </field>
