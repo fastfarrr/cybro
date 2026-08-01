@@ -34,6 +34,11 @@
         "views/hostel_student_views.xml",
         "views/hostel_facilities.xml",
         "views/hostel_menu_views.xml"],
+    'assets': {
+        'web.assets_backend': [
+            'hostel_management/static/src/js/action_manager.js'
+        ]
+    },
 
     'demo': [
         "demo/demo.xml",

@@ -1,12 +1,10 @@
 # -*- coding:utf-8 -*-
-import io
-
+# import io
 from odoo import models, api
-
-try:
-    from odoo.tools.misc import xlsxwriter
-except ImportError:
-    import xlsxwriter
+# try:
+#     from odoo.tools.misc import xlsxwriter
+# except ImportError:
+#     import xlsxwriter
 
 
 class StudentReport(models.AbstractModel):
@@ -29,35 +27,35 @@ class StudentReport(models.AbstractModel):
             'student_name': student
         }
 
-    def get_xlsx_report(self, data, response):
-        """This is function used to create excel report it will return
-         values in dictionary """
-        output = io.BytesIO()
-        print('this is what when BytesIo prints', output)
-        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        sheet = workbook.add_worksheet('Student Report')
-        sheet.set_column(1, 1, 15)
-        sheet.set_column(2, 2, 15)
-        border = workbook.add_format({'border': 1})
-        # green = workbook.add_format({'bg_color': '#28A828', 'border': 1})
-        # red = workbook.add_format({'bg_color': '#ff3333', 'border': 1})
-        # rose = workbook.add_format({'bg_color': '#DA70D6', 'border': 1})
-        head = workbook.add_format(
-            {'bold': True, 'font_size': 30, 'align': 'center'})
-        sheet.merge_range('C3:K6', 'Student Report', head)
-        sheet.merge_range('B8:C9', 'Student Name: ' + data['student_name'])
-        sheet.merge_range('B10:C11', 'Pending Amount: ' + data['pending_amount'])
-        sheet.merge_range('C12:D13', 'Room : ' + data['room_number'])
-        sheet.merge_range('D14:E15', 'Invoice Status: ' + data['invoice_status'])
-        sheet.merge_range('B16:B17', 'Sl.No', border)
-        sheet.merge_range('C16:C17', 'Name', border)
-        sheet.merge_range('D16:D17', 'Pending_amount', border)
-        sheet.merge_range('E16:E17','Room', border)
-        sheet.merge_range('F16:F17', 'Invoice Status', border)
-
-        workbook.close()
-        output.seek(0)
-        response.stream.write(output.read())
-        output.close()
+    # def get_xlsx_report(self, data, response):
+    #     """This is function used to create excel report it will return
+    #      values in dictionary """
+    #     output = io.BytesIO()
+    #     print('this is what when BytesIo prints', output)
+    #     workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+    #     sheet = workbook.add_worksheet('Student Report')
+    #     sheet.set_column(1, 1, 15)
+    #     sheet.set_column(2, 2, 15)
+    #     border = workbook.add_format({'border': 1})
+    #     # green = workbook.add_format({'bg_color': '#28A828', 'border': 1})
+    #     # red = workbook.add_format({'bg_color': '#ff3333', 'border': 1})
+    #     # rose = workbook.add_format({'bg_color': '#DA70D6', 'border': 1})
+    #     head = workbook.add_format(
+    #         {'bold': True, 'font_size': 30, 'align': 'center'})
+    #     sheet.merge_range('C3:K6', 'Student Report', head)
+    #     sheet.merge_range('B8:C9', 'Student Name: ' + data['student_name'])
+    #     sheet.merge_range('B10:C11', 'Pending Amount: ' + data['pending_amount'])
+    #     sheet.merge_range('C12:D13', 'Room : ' + data['room_number'])
+    #     sheet.merge_range('D14:E15', 'Invoice Status: ' + data['invoice_status'])
+    #     sheet.merge_range('B16:B17', 'Sl.No', border)
+    #     sheet.merge_range('C16:C17', 'Name', border)
+    #     sheet.merge_range('D16:D17', 'Pending_amount', border)
+    #     sheet.merge_range('E16:E17','Room', border)
+    #     sheet.merge_range('F16:F17', 'Invoice Status', border)
+    #
+    #     workbook.close()
+    #     output.seek(0)
+    #     response.stream.write(output.read())
+    #     output.close()
 
 

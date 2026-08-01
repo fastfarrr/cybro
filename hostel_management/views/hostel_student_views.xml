@@ -81,7 +81,8 @@
                             <page string="student details"
                                   name="student_details">
                                 <group>
-                                    <field name="student_ids" nolabel="1"/>
+                                    <field name="student_ids" nolabel="1",/>
+
                                 </group>
                             </page>
 
