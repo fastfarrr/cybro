@@ -20,6 +20,11 @@
                             string="generate PDF"
                             type="object"
                             icon="fa-print"/>
+                    <button class = 'btn-primary'
+                            name="generate_excel_report"
+                            string="Generate Excel"
+                            type="object"
+                            icon="fa-print"/>
                 </footer>
             </form>
         </field>

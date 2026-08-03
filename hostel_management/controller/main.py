@@ -10,6 +10,7 @@ class XLSXReportController(http.Controller):
     def get_report_xlsx(self, model, options, output_format, report_name):
         """xlsx report"""
         report_obj = request.env[model].with_user(request.session.uid)
+        print('21345',report_obj)
         options = json.loads(options)
         token = 'dummy-because-api-expects-one'
         try:
@@ -22,6 +23,7 @@ class XLSXReportController(http.Controller):
                     ]
                 )
                 report_obj.get_xlsx_report(options, response)
+                print('fgchj',options)
             response.set_cookie('fileToken', token)
             return response
         except Exception as e:
