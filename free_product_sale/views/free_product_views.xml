@@ -5,12 +5,9 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='company_id']" position="before">
-                <group>
+            <xpath expr="//field[@name='categ_id']" position="before">
 
-                    <field name="free_product"/>
-
-                </group>
+                <field name="free_product"/>
 
             </xpath>
         </field>
@@ -22,12 +19,31 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr = "//button[@id='create_invoice']" position="after">
-                    <button class = 'btn-primary'
-                            name="check_free_product"
-                            string="Check Free product"
-                            type="object"/>
+            <xpath expr="//button[@id='create_invoice']" position="after">
+                <button class='btn-primary'
+                        name="check_free_product"
+                        string="Check Free product"
+                        type="object"/>
             </xpath>
+
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+
+                <field name="excluded_product_ids" widget="many2many_tags"/>
+
+
+            </xpath>
+            <xpath expr="//page[@name='order_lines']//list" position="inside">
+
+                <button class='btn-primary'
+                        name="exclude_free_products"
+                        string="Exclude"
+                        type="object"
+                        invisible="not free_product"
+                />
+            </xpath>
+
+
         </field>
     </record>
+
 </odoo>
