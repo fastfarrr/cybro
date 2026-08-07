@@ -1,0 +1,27 @@
+# -*- coding:utf-8 -*-
+from odoo import models, api
+
+
+class StudentReport(models.AbstractModel):
+    """created as an abstract model it won't store anything in
+    the database its connect the ir.action report model"""
+    _name = 'report.hostel_management.student_report'
+    _description = 'Report Created'
+
+    @api.model
+    def _get_report_values(self, docids, data=None):
+        """This is  standard method to call the datas from the transient
+                model and return the values into dictionary"""
+        room = self.env['hostel.room'].browse(data['room_number'])
+        student = self.env['student.details'].browse(data['student_name'])
+        return {
+            'doc_ids': docids,
+            'doc_model': 'student.report.wizard',
+            'data': data['report'],
+            'room_number': room,
+            'student_name': student
+        }
+
+
+
+

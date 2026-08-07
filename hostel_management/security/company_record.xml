@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--   To see datas based on companies for every model    -->
+        <record id="room_my_company_rule" model="ir.rule">
+            <field name="name">company rule for hostel room</field>
+            <field name="model_id" ref="model_hostel_room"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+
+        </record>
+
+
+        <record id="student_company_rule" model="ir.rule">
+            <field name="name">company rule for student details</field>
+            <field name="model_id" ref="model_student_details"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="cleaning_company_rule" model="ir.rule">
+            <field name="name">company rule for hostel cleaning</field>
+            <field name="model_id" ref="model_hostel_cleaning"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="facility_company_rule" model="ir.rule">
+            <field name="name">company rule for leave request</field>
+            <field name="model_id" ref="model_hostel_facilities"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="leave_company_rule" model="ir.rule">
+            <field name="name">company rule for leave request</field>
+            <field name="model_id" ref="model_leave_request"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="invoice_company_rule" model="ir.rule">
+            <field name="name">company rule for leave request</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]
+            </field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- To see datas based on login user       -->
+
+        <record id="student_visibility_rule_stud" model="ir.rule">
+            <field name="name">Student visibility</field>
+            <field name="model_id" ref="model_student_details"/>
+            <field name="domain_force">[
+                ('user_id','=',user.id)
+                ]
+            </field>
+            <field name="groups"
+                   eval="[Command.link(ref('group_student_user'))]"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+        <record id="student_visibility_rule_warden" model="ir.rule">
+            <field name="name">Student visibility</field>
+            <field name="model_id" ref="model_student_details"/>
+            <field name="domain_force">[
+                (1,'=',1)
+                ]
+            </field>
+            <field name="groups"
+                   eval="[Command.link(ref('group_warden_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!--based on student in room-->
+        <record id="student_room_visibility_rule_stud" model="ir.rule">
+            <field name="name">Student room for student</field>
+            <field name="model_id" ref="model_hostel_room"/>
+            <field name="domain_force">
+                [('student_ids.user_id','=',user.id)]
+            </field>
+            <field name="groups"
+                   eval="[Command.link(ref('group_student_user'))]"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+        <record id="student_room_visibility_rule_warden" model="ir.rule">
+            <field name="name">Student room for warden</field>
+            <field name="model_id" ref="model_hostel_room"/>
+            <field name="domain_force">
+                [(1,'=',1)]
+            </field>
+            <field name="groups"
+                   eval="[Command.link(ref('group_warden_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!--Leave request view-->
+        <record id="student_leave_visibility_rule_stud" model="ir.rule">
+            <field name="name">Student leave for student</field>
+            <field name="model_id" ref="model_leave_request"/>
+            <field name="domain_force">
+                [('student_id.user_id','=',user.id)]
+            </field>
+            <field name="groups"
+                   eval="[Command.link(ref('group_student_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+        </record>
+
+        <record id="student_leave_visibility_rule_warden" model="ir.rule">
+            <field name="name">Student leave for warden</field>
+            <field name="model_id" ref="model_leave_request"/>
+            <field name="domain_force">
+                [(1,'=',1)]
+            </field>
+            <field name="groups"
+                   eval="[Command.link(ref('group_warden_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!--        cleaning for assigned users only -->
+        <record id="cleaning_rule_staff" model="ir.rule">
+            <field name="name">Staff cleaning staff view</field>
+            <field name="model_id" ref="model_hostel_cleaning"/>
+            <field name="domain_force">
+                ['|',('staff_id','=',False),('staff_id','=',user.id)]
+            </field>
+            <field name="groups"
+                   eval="[Command.link(ref('group_staff_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+
+        </record>
+
+        <record id="cleaning_rule_warden" model="ir.rule">
+            <field name="name">Staff cleaning warden view</field>
+            <field name="model_id" ref="model_hostel_cleaning"/>
+            <field name="domain_force">
+                [(1,'=',1)]
+            </field>
+            <field name="groups"
+                   eval="[Command.link(ref('group_warden_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+
+
+        </record>
+
+    </data>
+
+
+</odoo>
